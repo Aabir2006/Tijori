@@ -237,26 +237,26 @@ export default function LandingPage() {
               {[
                 {
                   step: "01",
-                  title: "Draft Escrow Deal",
-                  desc: "Seller specifies deliverables, revisions limit, and total amount (₹). Generates a secure share link.",
+                  title: "Client Posts Project",
+                  desc: "Client specifies project deliverables, milestones, and total budget (₹), funding escrow safely via UPI.",
                   icon: FileCheck2,
                 },
                 {
                   step: "02",
-                  title: "Client Funds Escrow",
-                  desc: "Client opens link on phone or laptop, scans UPI QR or pays via GPay/PhonePe into Tijori Escrow.",
+                  title: "Freelancer Starts Work",
+                  desc: "Freelancer works with 100% confidence, knowing funds are guaranteed and held securely in Tijori Escrow.",
                   icon: Lock,
                 },
                 {
                   step: "03",
-                  title: "Deliver & Audit",
-                  desc: "Freelancer completes the agreed work and submits source links or files directly into the deal thread.",
+                  title: "Submit Deliverables",
+                  desc: "Freelancer completes the agreed work and submits source links or files directly into the project thread.",
                   icon: Package,
                 },
                 {
                   step: "04",
-                  title: "Release & Settle",
-                  desc: "Client verifies the deliverable and taps 'Accept'. Payment releases directly to freelancer's bank account.",
+                  title: "Approve & Settle",
+                  desc: "Client inspects the completed work and taps 'Approve'. Payment releases instantly to freelancer's bank account.",
                   icon: CheckCircle2,
                 },
               ].map((item, idx) => (

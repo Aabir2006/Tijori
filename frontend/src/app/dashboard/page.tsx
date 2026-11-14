@@ -102,13 +102,15 @@ export default function DashboardPage() {
     }
   }, [deals, role, userName]);
 
-  // Tab & search-filtered deals for seller
-  const sellerFilteredDeals = useMemo(() => {
+  // Tab & search-filtered deals
+  const filteredDeals = useMemo(() => {
     let result = roleDeals;
     if (filterTab === "awaiting") {
       result = roleDeals.filter((d) => d.status === "CREATED");
     } else if (filterTab === "progress") {
-      result = roleDeals.filter((d) => d.status === "FUNDED" || d.status === "DELIVERED");
+      result = roleDeals.filter((d) => d.status === "FUNDED");
+    } else if (filterTab === "delivered") {
+      result = roleDeals.filter((d) => d.status === "DELIVERED");
     } else if (filterTab === "completed") {
       result = roleDeals.filter(
         (d) => d.status === "COMPLETED" || d.status.startsWith("RESOLVED_")
@@ -260,11 +262,11 @@ export default function DashboardPage() {
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
-            {role === "SELLER" && (
+            {role === "BUYER" && (
               <Link href="/deals/new">
-                <Button className="h-9 bg-emerald-600 hover:bg-emerald-700 text-white gap-2 text-xs font-semibold shadow-sm">
+                <Button className="h-9 bg-blue-600 hover:bg-blue-700 text-white gap-2 text-xs font-semibold shadow-sm">
                   <Plus className="size-4" />
-                  New Escrow Deal
+                  Post New Project
                 </Button>
               </Link>
             )}
@@ -341,30 +343,30 @@ export default function DashboardPage() {
               })}
             </div>
 
-            {/* ── Buyer Workspace: Quick Paste Deal Link Strip ───── */}
-            {role === "BUYER" && (
+            {/* ── Freelancer / Seller: Quick Open Project Strip ───── */}
+            {role === "SELLER" && (
               <Card className="border-border/80 bg-card shadow-sm">
                 <CardContent className="p-4 sm:p-5">
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                     <div className="space-y-0.5">
                       <h3 className="text-sm font-semibold flex items-center gap-1.5">
-                        <ShoppingBag className="size-4 text-blue-600" />
-                        Open Received Escrow Contract
+                        <Briefcase className="size-4 text-emerald-600" />
+                        Open Client Project / Escrow Contract
                       </h3>
                       <p className="text-xs text-muted-foreground">
-                        Received a deal link via WhatsApp or email? Paste the deal ID or URL to fund escrow.
+                        Received a project invitation link from a client? Paste the deal ID or URL here to view terms.
                       </p>
                     </div>
 
                     <form onSubmit={handleOpenDealInput} className="flex gap-2 w-full sm:max-w-md">
                       <Input
-                        placeholder="e.g. deal-001 or URL"
+                        placeholder="e.g. deal-001 or project URL"
                         value={dealInput}
                         onChange={(e) => setDealInput(e.target.value)}
                         className="bg-background text-xs h-9"
                       />
-                      <Button type="submit" size="sm" className="bg-primary text-primary-foreground text-xs gap-1 shrink-0 h-9">
-                        Open Deal
+                      <Button type="submit" size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs gap-1 shrink-0 h-9">
+                        Open Project
                         <ArrowRight className="size-3.5" />
                       </Button>
                     </form>
@@ -380,8 +382,8 @@ export default function DashboardPage() {
                   <Tabs value={filterTab} onValueChange={setFilterTab} className="w-full sm:w-auto">
                     <TabsList className="grid grid-cols-5 w-full sm:w-auto h-9 text-xs">
                       <TabsTrigger value="all" className="text-xs">All ({roleDeals.length})</TabsTrigger>
-                      <TabsTrigger value="awaiting" className="text-xs">Awaiting</TabsTrigger>
                       <TabsTrigger value="progress" className="text-xs">In Progress</TabsTrigger>
+                      <TabsTrigger value="delivered" className="text-xs">Delivered</TabsTrigger>
                       <TabsTrigger value="completed" className="text-xs">Completed</TabsTrigger>
                       <TabsTrigger value="disputed" className="text-xs">Disputed</TabsTrigger>
                     </TabsList>
@@ -390,7 +392,7 @@ export default function DashboardPage() {
                   <div className="relative w-full sm:w-64">
                     <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
                     <Input
-                      placeholder="Search contracts…"
+                      placeholder="Search projects…"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-8 text-xs h-9 bg-card"
@@ -398,58 +400,15 @@ export default function DashboardPage() {
                   </div>
                 </div>
 
-                {sellerFilteredDeals.length > 0 ? (
+                {filteredDeals.length > 0 ? (
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {sellerFilteredDeals.map((deal) => (
-                      <DealCard
-                        key={deal.id}
-                        deal={deal}
-                        counterpartyName={deal.buyerName || "Awaiting Client"}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <Card className="border-dashed py-14 text-center">
-                    <CardContent className="flex flex-col items-center gap-3">
-                      <div className="size-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-                        <FolderOpen className="size-6" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-base">No contracts in this view</p>
-                        <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
-                          Draft your first milestone contract and share the secure link with your client.
-                        </p>
-                      </div>
-                      <Link href="/deals/new">
-                        <Button className="mt-2 bg-emerald-600 hover:bg-emerald-700 text-white gap-2 text-xs">
-                          <Plus className="size-4" />
-                          Create New Escrow
-                        </Button>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            )}
-
-            {/* ── Client / Buyer Workspace ──────────────────────── */}
-            {role === "BUYER" && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-base font-bold tracking-tight">Your Commissioned Projects</h2>
-                  <span className="text-xs text-muted-foreground">{roleDeals.length} Contracts</span>
-                </div>
-
-                {roleDeals.length > 0 ? (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {roleDeals.map((deal) => {
-                      const actionNeeded =
-                        deal.status === "DELIVERED" || deal.status === "CREATED";
+                    {filteredDeals.map((deal) => {
+                      const actionNeeded = deal.status === "FUNDED";
                       return (
                         <DealCard
                           key={deal.id}
                           deal={deal}
-                          counterpartyName={deal.sellerName}
+                          counterpartyName={deal.buyerName || "Client"}
                           actionNeeded={actionNeeded}
                         />
                       );
@@ -458,13 +417,88 @@ export default function DashboardPage() {
                 ) : (
                   <Card className="border-dashed py-14 text-center">
                     <CardContent className="flex flex-col items-center gap-3">
-                      <FolderOpen className="size-12 text-muted-foreground/40" />
+                      <div className="size-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
+                        <FolderOpen className="size-6" />
+                      </div>
                       <div>
-                        <p className="font-semibold text-base">No active orders</p>
+                        <p className="font-semibold text-base">No projects in this view</p>
                         <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
-                          Paste your freelancer&apos;s escrow contract link above to view scope and fund deposit.
+                          When a client assigns you to a project or shares an escrow link, your active contracts will appear here.
                         </p>
                       </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
+
+            {/* ── Client / Buyer Workspace ──────────────────────── */}
+            {role === "BUYER" && (
+              <div className="space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <Tabs value={filterTab} onValueChange={setFilterTab} className="w-full sm:w-auto">
+                    <TabsList className="grid grid-cols-6 w-full sm:w-auto h-9 text-xs">
+                      <TabsTrigger value="all" className="text-xs">All ({roleDeals.length})</TabsTrigger>
+                      <TabsTrigger value="awaiting" className="text-xs">Awaiting</TabsTrigger>
+                      <TabsTrigger value="progress" className="text-xs">In Progress</TabsTrigger>
+                      <TabsTrigger value="delivered" className="text-xs">Review</TabsTrigger>
+                      <TabsTrigger value="completed" className="text-xs">Completed</TabsTrigger>
+                      <TabsTrigger value="disputed" className="text-xs">Disputed</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+
+                  <div className="flex items-center gap-2">
+                    <div className="relative w-full sm:w-56">
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+                      <Input
+                        placeholder="Search posted projects…"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="pl-8 text-xs h-9 bg-card"
+                      />
+                    </div>
+                    <Link href="/deals/new">
+                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-1.5 h-9 shrink-0">
+                        <Plus className="size-3.5" />
+                        Post Project
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                {filteredDeals.length > 0 ? (
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {filteredDeals.map((deal) => {
+                      const actionNeeded =
+                        deal.status === "DELIVERED" || deal.status === "CREATED";
+                      return (
+                        <DealCard
+                          key={deal.id}
+                          deal={deal}
+                          counterpartyName={deal.sellerName || "Freelancer"}
+                          actionNeeded={actionNeeded}
+                        />
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <Card className="border-dashed py-14 text-center">
+                    <CardContent className="flex flex-col items-center gap-3">
+                      <div className="size-12 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center">
+                        <ShoppingBag className="size-6" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-base">No commissioned projects found</p>
+                        <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
+                          Post your project specifications, set deliverables, and fund escrow to start working with freelancers safely.
+                        </p>
+                      </div>
+                      <Link href="/deals/new">
+                        <Button className="mt-2 bg-blue-600 hover:bg-blue-700 text-white gap-2 text-xs">
+                          <Plus className="size-4" />
+                          Post New Project
+                        </Button>
+                      </Link>
                     </CardContent>
                   </Card>
                 )}

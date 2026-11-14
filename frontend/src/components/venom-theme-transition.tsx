@@ -25,8 +25,8 @@ export function VenomThemeTransition() {
       setIsVisible(true);
 
       const isToDark = targetTheme === "dark";
-      const fillColor = isToDark ? "#060608" : "#fbfcfd";
-      const secondaryColor = isToDark ? "#0d0e12" : "#f1f3f6";
+      const fillColor = isToDark ? "#060608" : "#FFFFF0";
+      const secondaryColor = isToDark ? "#0d0e12" : "#F7F7E6";
 
       // Colorize elements
       const elementsToColor = [

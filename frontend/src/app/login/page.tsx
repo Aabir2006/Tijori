@@ -10,7 +10,6 @@ import {
   ArrowRight,
   Briefcase,
   ShoppingBag,
-  Scale,
   CheckCircle2,
   Loader2,
   Sparkles,
@@ -149,10 +148,9 @@ export default function LoginPage() {
                 <div className="space-y-1.5 pt-1">
                   <Label className="text-xs">Select Primary Workspace</Label>
                   <Tabs value={role} onValueChange={(v) => setRole(v as Role)} className="w-full">
-                    <TabsList className="grid grid-cols-3 w-full h-8 text-xs">
+                    <TabsList className="grid grid-cols-2 w-full h-8 text-xs">
                       <TabsTrigger value="SELLER" className="text-xs">Freelancer</TabsTrigger>
                       <TabsTrigger value="BUYER" className="text-xs">Client</TabsTrigger>
-                      <TabsTrigger value="ADMIN" className="text-xs">Arbitrator</TabsTrigger>
                     </TabsList>
                   </Tabs>
                 </div>
@@ -189,7 +187,7 @@ export default function LoginPage() {
               </div>
 
               {/* Quick Persona Logins */}
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <Button
                   type="button"
                   variant="outline"
@@ -230,28 +228,6 @@ export default function LoginPage() {
                     </div>
                     <div className="text-[0.65rem] text-muted-foreground truncate">
                       {PRESET_USERS.buyer.roleTitle} (Client)
-                    </div>
-                  </div>
-                </Button>
-
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleQuickLogin("admin")}
-                  disabled={isLoading}
-                  className="justify-start gap-2.5 h-11 text-xs border-border/80 hover:bg-amber-50/50 hover:border-amber-200"
-                >
-                  <div className="size-7 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 flex items-center justify-center shrink-0">
-                    <Scale className="size-3.5" />
-                  </div>
-                  <div className="text-left flex-1 truncate">
-                    <div className="font-semibold text-foreground flex items-center gap-1">
-                      {PRESET_USERS.admin.name}
-                      <CheckCircle2 className="size-3 text-amber-600" />
-                    </div>
-                    <div className="text-[0.65rem] text-muted-foreground truncate">
-                      Panchayat AI Compliance Desk
                     </div>
                   </div>
                 </Button>

@@ -688,34 +688,15 @@ function DealDetailContent() {
                   <>
                     {isSeller && (
                       <div className="space-y-3">
-                        <div className="rounded-xl bg-emerald-50 dark:bg-emerald-950/40 p-3.5 text-xs text-emerald-900 dark:text-emerald-200 space-y-1 border border-emerald-200/60">
-                          <p className="font-bold flex items-center gap-1.5">
-                            <ShieldCheck className="size-4 text-emerald-600" />
-                            Agreement Ready for Client
+                        <div className="rounded-xl bg-muted/60 p-3.5 text-xs text-muted-foreground space-y-1 border border-border">
+                          <p className="font-bold text-foreground flex items-center gap-1.5">
+                            <Clock className="size-4 text-amber-600" />
+                            Awaiting Client Escrow Deposit
                           </p>
                           <p className="text-[0.72rem]">
-                            Share this link with your client. Once they deposit {formatRupees(deal.amount)} into
-                            escrow via UPI, you can safely commence work.
+                            The client ({deal.buyerName || "Client"}) has posted this project. Once they deposit {formatRupees(deal.amount)} into
+                            Tijori Escrow via UPI, you can commence work and submit deliverables.
                           </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          <Button
-                            onClick={handleCopyLink}
-                            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2 text-xs h-10 shadow-sm"
-                          >
-                            {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-                            {copied ? "Link Copied!" : "Copy Contract Link"}
-                          </Button>
-
-                          <Button
-                            variant="outline"
-                            onClick={handleWhatsAppShare}
-                            className="w-full text-xs h-10 gap-1.5 border-emerald-200 text-emerald-700 hover:bg-emerald-50"
-                          >
-                            <MessageSquare className="size-4 text-emerald-600" />
-                            Share on WhatsApp
-                          </Button>
                         </div>
                       </div>
                     )}
@@ -725,17 +706,35 @@ function DealDetailContent() {
                         <div className="rounded-xl bg-blue-50 dark:bg-blue-950/40 p-3 text-xs text-blue-900 dark:text-blue-200 border border-blue-200/60">
                           <p className="font-semibold">Fund Escrow to Start Project</p>
                           <p className="text-[0.7rem] mt-0.5">
-                            Your payment is held in regulated escrow. Funds are only disbursed to
+                            Your payment is held safely in regulated escrow. Funds are only disbursed to
                             the freelancer once you inspect and approve the completed scope.
                           </p>
                         </div>
                         <Button
                           size="lg"
                           onClick={() => setUpiOpen(true)}
-                          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2 font-bold text-sm h-11 shadow-md"
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 font-bold text-sm h-11 shadow-md"
                         >
                           Deposit {formatRupees(deal.amount)} via UPI Escrow
                         </Button>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                          <Button
+                            variant="outline"
+                            onClick={handleCopyLink}
+                            className="w-full text-xs h-9 gap-1.5 border-border"
+                          >
+                            {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+                            {copied ? "Link Copied!" : "Share Link with Freelancer"}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={handleWhatsAppShare}
+                            className="w-full text-xs h-9 gap-1.5 border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300"
+                          >
+                            <MessageSquare className="size-3.5 text-emerald-600" />
+                            Invite on WhatsApp
+                          </Button>
+                        </div>
                       </div>
                     )}
 

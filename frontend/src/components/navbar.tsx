@@ -114,17 +114,17 @@ export function Navbar() {
                 Dashboard
               </Link>
 
-              {user?.role === "SELLER" && (
+              {user?.role === "BUYER" && (
                 <Link
                   href="/deals/new"
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
                     pathname === "/deals/new"
-                      ? "text-emerald-700 bg-emerald-50/80 dark:bg-emerald-950/40 dark:text-emerald-300"
+                      ? "text-blue-700 bg-blue-50/80 dark:bg-blue-950/40 dark:text-blue-300 font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   }`}
                 >
                   <Plus className="size-4" />
-                  New Escrow
+                  Post Project
                 </Link>
               )}
             </nav>
@@ -172,16 +172,18 @@ export function Navbar() {
                     {user.role === "BUYER" && <CheckCircle2 className="size-3.5 ml-auto text-blue-600" />}
                   </DropdownMenuItem>
 
-                  <DropdownMenuItem
-                    onClick={() => handleRoleChange("ADMIN")}
-                    className={`flex items-center gap-2 text-xs font-medium ${
-                      user.role === "ADMIN" ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 font-semibold" : ""
-                    }`}
-                  >
-                    <Scale className="size-3.5 text-amber-600" />
-                    Arbitrator / Admin
-                    {user.role === "ADMIN" && <CheckCircle2 className="size-3.5 ml-auto text-amber-600" />}
-                  </DropdownMenuItem>
+                  {user.role === "ADMIN" && (
+                    <DropdownMenuItem
+                      onClick={() => handleRoleChange("ADMIN")}
+                      className={`flex items-center gap-2 text-xs font-medium ${
+                        user.role === "ADMIN" ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 font-semibold" : ""
+                      }`}
+                    >
+                      <Scale className="size-3.5 text-amber-600" />
+                      Arbitrator / Admin
+                      <CheckCircle2 className="size-3.5 ml-auto text-amber-600" />
+                    </DropdownMenuItem>
+                  )}
 
                   <DropdownMenuSeparator />
                   <DropdownMenuLabel className="text-[0.68rem] text-muted-foreground font-normal">
@@ -193,9 +195,11 @@ export function Navbar() {
                   <DropdownMenuItem onClick={() => loginAsPreset("buyer")} className="text-xs">
                     Rohan Mehta (Tech Lead)
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => loginAsPreset("admin")} className="text-xs">
-                    Panchayat Compliance Desk
-                  </DropdownMenuItem>
+                  {user.role === "ADMIN" && (
+                    <DropdownMenuItem onClick={() => loginAsPreset("admin")} className="text-xs">
+                      Panchayat Compliance Desk
+                    </DropdownMenuItem>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
 
@@ -254,13 +258,13 @@ export function Navbar() {
                     Dashboard &amp; Escrow Contracts
                   </DropdownMenuItem>
 
-                  {user.role === "SELLER" && (
+                  {user.role === "BUYER" && (
                     <DropdownMenuItem
                       onClick={() => router.push("/deals/new")}
                       className="flex items-center gap-2 text-xs cursor-pointer"
                     >
                       <Plus className="size-3.5 text-muted-foreground" />
-                      Create New Escrow Deal
+                      Post New Project
                     </DropdownMenuItem>
                   )}
 
