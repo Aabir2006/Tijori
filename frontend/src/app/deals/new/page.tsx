@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -31,7 +31,7 @@ import { updateStoredDeal } from "@/lib/storage";
 import type { Deal } from "@/lib/types";
 import { toast } from "sonner";
 
-export default function CreateDealPage() {
+function CreateDealContent() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
@@ -47,15 +47,14 @@ export default function CreateDealPage() {
     return formatDateToInput(d);
   };
 
-  const tomorrowStr = getFutureDate(1);
-
   // Form states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [freelancerName, setFreelancerName] = useState("");
   const [timeLimitDays, setTimeLimitDays] = useState<number>(7);
-  const [deadlineDate, setDeadlineDate] = useState<string>(getFutureDate(7));
+  const [deadlineDate, setDeadlineDate] = useState<string>("");
+  const [tomorrowMinDate, setTomorrowMinDate] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const role = user?.role;
@@ -63,6 +62,8 @@ export default function CreateDealPage() {
 
   useEffect(() => {
     setMounted(true);
+    setTomorrowMinDate(getFutureDate(1));
+    setDeadlineDate(getFutureDate(7));
   }, []);
 
   useEffect(() => {
@@ -382,7 +383,7 @@ export default function CreateDealPage() {
                         <Input
                           id="deadline"
                           type="date"
-                          min={tomorrowStr}
+                          min={tomorrowMinDate || undefined}
                           value={deadlineDate}
                           onChange={(e) => handleDateChange(e.target.value)}
                           disabled={isSubmitting}
@@ -525,5 +526,19 @@ export default function CreateDealPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function CreateDealPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background">
+          <Navbar />
+        </div>
+      }
+    >
+      <CreateDealContent />
+    </Suspense>
   );
 }
