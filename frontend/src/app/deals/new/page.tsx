@@ -36,17 +36,6 @@ function CreateDealContent() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
 
-  // Helper date generators
-  const formatDateToInput = (d: Date) => {
-    return d.toISOString().split("T")[0];
-  };
-
-  const getFutureDate = (days: number) => {
-    const d = new Date();
-    d.setDate(d.getDate() + days);
-    return formatDateToInput(d);
-  };
-
   // Form states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -55,15 +44,33 @@ function CreateDealContent() {
   const [timeLimitDays, setTimeLimitDays] = useState<number>(7);
   const [deadlineDate, setDeadlineDate] = useState<string>("");
   const [tomorrowMinDate, setTomorrowMinDate] = useState<string>("");
+  const [formattedDeadline, setFormattedDeadline] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const role = user?.role;
   const userName = user?.name || "Client";
 
+  // Helper date generator (only called client-side inside useEffect and event handlers)
+  const computeFutureDate = (days: number) => {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    const dateStr = d.toISOString().split("T")[0];
+    const displayStr = d.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    return { dateStr, displayStr };
+  };
+
   useEffect(() => {
     setMounted(true);
-    setTomorrowMinDate(getFutureDate(1));
-    setDeadlineDate(getFutureDate(7));
+    const tomorrow = computeFutureDate(1);
+    setTomorrowMinDate(tomorrow.dateStr);
+
+    const default7Days = computeFutureDate(7);
+    setDeadlineDate(default7Days.dateStr);
+    setFormattedDeadline(default7Days.displayStr);
   }, []);
 
   useEffect(() => {
@@ -74,7 +81,9 @@ function CreateDealContent() {
 
   const handleSelectDays = (days: number) => {
     setTimeLimitDays(days);
-    setDeadlineDate(getFutureDate(days));
+    const future = computeFutureDate(days);
+    setDeadlineDate(future.dateStr);
+    setFormattedDeadline(future.displayStr);
   };
 
   const handleDateChange = (dateVal: string) => {
@@ -86,16 +95,17 @@ function CreateDealContent() {
       const diffTime = selected.getTime() - today.getTime();
       const diffDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
       setTimeLimitDays(diffDays);
+      setFormattedDeadline(
+        selected.toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })
+      );
+    } else {
+      setFormattedDeadline("");
     }
   };
-
-  const formattedDeadline = deadlineDate
-    ? new Date(deadlineDate).toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      })
-    : "";
 
   if (!mounted || authLoading || !isAuthenticated) {
     return (
