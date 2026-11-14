@@ -5,8 +5,8 @@
 ## Stack
 - **Backend**: FastAPI + uvicorn, `psycopg2` (no ORM), Anthropic Python SDK
 - **Database**: PostgreSQL (Render managed free tier)
-- **AI**: Anthropic Claude for dispute verdicts
-- **Frontend**: React (separate repo, consumes JSON contract)
+- **AI**: Anthropic Claude / Google Gemini for dispute verdicts
+- **Frontend**: Next.js 16 (App Router), TypeScript, Tailwind CSS v4, shadcn/ui, Sonner
 
 ---
 
@@ -40,6 +40,12 @@ curl -X POST http://localhost:8000/api/dev/seed -H "Content-Type: application/js
 # 7. Run tests
 cd ../backend-tests
 ./test.sh http://localhost:8000
+
+# 8. Run Frontend
+cd ../frontend
+npm install
+npm run dev
+# Open http://localhost:3000
 ```
 
 ---
