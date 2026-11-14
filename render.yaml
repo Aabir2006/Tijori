@@ -14,7 +14,8 @@ services:
       - key: AI_MODEL
         value: "gemini-1.5-flash-latest"
       - key: ALLOW_SEED
-        value: "true"
+        value: "false"
+        # Set to "true" temporarily after first deploy to seed demo data, then back to "false"
       - key: DATABASE_URL
         fromDatabase:
           name: tijori-db
