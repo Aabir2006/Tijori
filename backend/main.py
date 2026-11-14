@@ -9,7 +9,10 @@ from seed import seed
 from ai import get_ai_verdict
 
 app = FastAPI(title="Escrow API", version="1.0.0")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+# CORS: configurable via ALLOWED_ORIGINS env var (comma-separated), default "*" for demo
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+app.add_middleware(CORSMiddleware, allow_origins=allowed_origins, allow_methods=["*"], allow_headers=["*"])
 app.add_exception_handler(ApiError, api_error_handler)
 
 @app.on_event("startup")
@@ -23,20 +26,35 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         status_code = 400,
         content = {"error": {"code": "VALIDATION_ERROR", "message": "Invalid request payload"}}
     )
+
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    """Catch-all for unhandled exceptions — return contract error format."""
+    return JSONResponse(
+        status_code=500,
+        content={"error": {"code": "INTERNAL_ERROR", "message": "Internal server error"}},
+    )
+
+
 @app.get("/api/health")
 def health():
     return {"ok": True}
 
 @app.post("/api/dev/seed")
-def seed_data():
+def seed_data(request: Request):
 
-    if os.getenv("ALLOW_SEED") != "true": 
+    # Require admin role + ALLOW_SEED env var
+    user_role, user_name = get_auth(request)
+    require_role(user_role, ["admin"])
+
+    if os.getenv("ALLOW_SEED") != "true":
         raise ApiError("Seeding is disabled", "FORBIDDEN", 403)
-    
+
     with get_conn() as conn:
         seed(conn)
         conn.commit()
-    
+
     return {"ok": True, "dealsCreated": 5}
 
 @app.post("/api/deals", status_code=201)
@@ -291,10 +309,13 @@ async def resolve(deal_id: str, request: Request):
             deal_dict = row_to_deal(deal)
             verdict = deal_dict.get("aiVerdict")
 
-            if isinstance(verdict, dict) and verdict.get("recommendation") == "SPLIT":
-                share = verdict.get("sellerSharePercent")
-                if type(share) is not int or not (1 <= share <= 99):
-                    raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
+            if not isinstance(verdict, dict):
+                raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
+            if verdict.get("recommendation") != "SPLIT":
+                raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
+            share = verdict.get("sellerSharePercent")
+            if type(share) is not int or not (1 <= share <= 99):
+                raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
 
         new_status = outcome_map[outcome]
         with conn.cursor() as cur:

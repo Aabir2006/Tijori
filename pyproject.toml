@@ -1,0 +1,19 @@
+[project]
+name = "tijori"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "RitabrataDutta01", email = "ritabratadutta1234@zohomail.in" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "anthropic>=2.8.0",
+    "fastapi>=0.162.7",
+    "google-genai>=3.3.0",
+    "google-generativeai>=0.8.6",
+    "psycopg[binary]>=3.3.9",
+    "python-dotenv>=1.2.4",
+    "uvicorn>=0.54.0",
+]
+

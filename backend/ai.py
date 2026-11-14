@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration from environment
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-AI_MODEL = os.getenv("AI_MODEL", "gemini-1.5-flash")
+AI_MODEL = os.getenv("AI_MODEL", "gemini-1.5-flash-latest")
 
 if not GEMINI_API_KEY:
     logger.warning("GEMINI_API_KEY not set — AI verdicts will always return None")
