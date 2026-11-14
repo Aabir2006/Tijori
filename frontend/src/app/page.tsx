@@ -42,17 +42,17 @@ export default function LandingPage() {
             <div className="flex flex-col">
               <span className="text-base font-bold tracking-tight leading-none flex items-center gap-1.5">
                 TIJORI
-                <span className="rounded bg-emerald-100 dark:bg-emerald-950/60 px-1 py-0.2 text-[0.62rem] font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
+                <span className="rounded bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.5 text-[0.72rem] font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
                   ESCROW
                 </span>
               </span>
-              <span className="text-[0.65rem] text-muted-foreground font-medium tracking-wide">
+              <span className="text-sm text-muted-foreground font-medium tracking-wide">
                 UPI Protection Network
               </span>
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-muted-foreground">
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-muted-foreground">
             <a href="#how-it-works" className="hover:text-foreground transition-colors">
               How It Works
             </a>
@@ -71,20 +71,20 @@ export default function LandingPage() {
             <ThemeToggle />
             {isAuthenticated ? (
               <Link href="/dashboard">
-                <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs gap-1.5 shadow-sm">
+                <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm gap-1.5 shadow-sm h-9 px-3.5">
                   Go to Dashboard
-                  <ChevronRight className="size-3.5" />
+                  <ChevronRight className="size-4" />
                 </Button>
               </Link>
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" size="sm" className="text-xs">
+                  <Button variant="ghost" size="sm" className="text-sm h-9 px-3.5">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs shadow-sm font-semibold">
+                  <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm shadow-sm font-semibold h-9 px-4">
                     Get Started Free
                   </Button>
                 </Link>
@@ -307,29 +307,29 @@ export default function LandingPage() {
                 </p>
 
                 <div className="grid sm:grid-cols-3 gap-3 pt-2 text-xs">
-                  <div className="p-3 rounded-xl bg-card border border-border space-y-1">
-                    <span className="font-semibold text-emerald-700 flex items-center gap-1">
+                  <div className="p-3.5 rounded-xl bg-card border border-border space-y-1">
+                    <span className="font-semibold text-emerald-700 flex items-center gap-1.5 text-xs">
                       <CheckCircle2 className="size-3.5" /> Scope Verification
                     </span>
-                    <p className="text-[0.72rem] text-muted-foreground">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       Validates deliverables against the signed contract specifications.
                     </p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-card border border-border space-y-1">
-                    <span className="font-semibold text-amber-700 flex items-center gap-1">
+                  <div className="p-3.5 rounded-xl bg-card border border-border space-y-1">
+                    <span className="font-semibold text-amber-700 flex items-center gap-1.5 text-xs">
                       <Scale className="size-3.5" /> Fair Pro-Rata Splits
                     </span>
-                    <p className="text-[0.72rem] text-muted-foreground">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       Calculates partial milestone payments if 40% or 60% of work was completed.
                     </p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-card border border-border space-y-1">
-                    <span className="font-semibold text-blue-700 flex items-center gap-1">
+                  <div className="p-3.5 rounded-xl bg-card border border-border space-y-1">
+                    <span className="font-semibold text-blue-700 flex items-center gap-1.5 text-xs">
                       <ShieldCheck className="size-3.5" /> Human Arbitrator
                     </span>
-                    <p className="text-[0.72rem] text-muted-foreground">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       Platform compliance officer reviews and confirms the AI recommendation.
                     </p>
                   </div>
@@ -452,7 +452,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto pt-6 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-[0.7rem]">
+        <div className="max-w-6xl mx-auto pt-6 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <span>© 2026 Tijori Technologies Private Limited. All rights reserved.</span>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">

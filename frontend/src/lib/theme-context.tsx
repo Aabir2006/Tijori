@@ -84,16 +84,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    // Trigger Symbiote Animation
+    // Trigger Slide Theme Transition Animation
     setIsAnimating(true);
     animationTriggerRef.current(
       nextTheme,
-      // Midpoint: screen is 100% covered by symbiote material
+      // Midpoint: screen is 100% covered by transition curtain
       () => {
         applyThemeToDOM(nextTheme);
         setThemeState(nextTheme);
       },
-      // On Complete: symbiote has fully retracted/dissolved
+      // On Complete: curtain has fully exited
       () => {
         setIsAnimating(false);
       }

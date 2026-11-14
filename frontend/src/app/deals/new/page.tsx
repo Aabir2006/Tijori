@@ -200,7 +200,7 @@ export default function CreateDealPage() {
                 <CardTitle className="text-2xl font-bold tracking-tight">
                   Post New Project
                 </CardTitle>
-                <CardDescription className="text-xs">
+                <CardDescription className="text-sm">
                   Define what you need built, your budget, and assigned freelancer. Funds remain safe in Tijori Escrow until you inspect and approve completed work.
                 </CardDescription>
               </CardHeader>
@@ -213,7 +213,7 @@ export default function CreateDealPage() {
                       <Label htmlFor="title" className="text-xs font-semibold">
                         Project Title *
                       </Label>
-                      <span className="text-[0.68rem] text-muted-foreground font-mono">
+                      <span className="text-xs text-muted-foreground font-mono">
                         {title.length}/80
                       </span>
                     </div>
@@ -241,9 +241,9 @@ export default function CreateDealPage() {
                       value={freelancerName}
                       onChange={(e) => setFreelancerName(e.target.value)}
                       disabled={isSubmitting}
-                      className="text-xs h-9"
+                      className="text-sm h-9"
                     />
-                    <p className="text-[0.68rem] text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       The freelancer who will execute this project and submit deliverables.
                     </p>
                   </div>
@@ -298,7 +298,7 @@ export default function CreateDealPage() {
                         required
                       />
                     </div>
-                    <p className="text-[0.7rem] text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       You will deposit this amount into Tijori Escrow via UPI. Funds are only paid out when you approve the work.
                     </p>
                   </div>
@@ -347,7 +347,7 @@ export default function CreateDealPage() {
             <Card className="border-border/80 bg-card/60 shadow-md">
               <CardContent className="p-5 space-y-4">
                 <div className="flex items-center justify-between border-b pb-3">
-                  <Badge variant="outline" className="text-[0.68rem] bg-gray-100 text-gray-700 border-0">
+                  <Badge variant="outline" className="text-xs bg-gray-100 text-gray-700 border-0 px-2 py-0.5">
                     Awaiting Escrow Deposit
                   </Badge>
                   <span className="text-xs text-muted-foreground">Tijori Escrow Protect</span>
@@ -370,10 +370,10 @@ export default function CreateDealPage() {
 
                 {/* Scope preview */}
                 <div className="space-y-1">
-                  <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     Deliverables &amp; Scope
                   </span>
-                  <div className="rounded-lg bg-muted/40 p-3 text-xs text-muted-foreground leading-relaxed min-h-[90px] whitespace-pre-wrap">
+                  <div className="rounded-lg bg-muted/40 p-3 text-sm text-muted-foreground leading-relaxed min-h-[90px] whitespace-pre-wrap">
                     {description || "Deliverables specifications and acceptance criteria will appear here."}
                   </div>
                 </div>

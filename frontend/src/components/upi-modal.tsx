@@ -77,21 +77,21 @@ export function UpiModal({ open, onOpenChange, amount, onSuccess }: UpiModalProp
               </div>
               <span className="text-sm font-bold tracking-tight">Tijori Secure Escrow</span>
             </div>
-            <Badge className="bg-emerald-500/20 text-emerald-200 border-emerald-400/30 text-[0.65rem] font-medium">
+            <Badge className="bg-emerald-500/20 text-emerald-200 border-emerald-400/30 text-xs font-medium">
               256-bit Encrypted
             </Badge>
           </div>
 
           <div className="mt-4 flex items-baseline justify-between">
             <div>
-              <p className="text-[0.7rem] text-emerald-200/80 uppercase tracking-wider font-medium">
+              <p className="text-xs text-emerald-200/80 uppercase tracking-wider font-medium">
                 Escrow Deposit
               </p>
               <p className="text-3xl font-extrabold tracking-tight mt-0.5">
                 {formatRupees(amount)}
               </p>
             </div>
-            <div className="text-right text-[0.7rem] text-emerald-200/80">
+            <div className="text-right text-xs text-emerald-200/80">
               <p>Nodal Beneficiary</p>
               <p className="font-semibold text-white">Tijori Nodal Escrow A/C</p>
             </div>
@@ -173,7 +173,7 @@ export function UpiModal({ open, onOpenChange, amount, onSuccess }: UpiModalProp
                   </div>
 
                   <div className="space-y-1 pt-1">
-                    <Label htmlFor="vpa" className="text-[0.7rem] text-muted-foreground">
+                    <Label htmlFor="vpa" className="text-xs text-muted-foreground">
                       Or pay using Virtual Payment Address (VPA)
                     </Label>
                     <Input
@@ -181,7 +181,7 @@ export function UpiModal({ open, onOpenChange, amount, onSuccess }: UpiModalProp
                       value={vpa}
                       onChange={(e) => setVpa(e.target.value)}
                       placeholder="username@upi"
-                      className="text-xs h-9 font-mono"
+                      className="text-sm h-9 font-mono"
                     />
                   </div>
                 </TabsContent>
@@ -194,7 +194,7 @@ export function UpiModal({ open, onOpenChange, amount, onSuccess }: UpiModalProp
                         <div className="size-6 bg-white rounded-sm border-2 border-emerald-950" />
                         <div className="size-6 bg-white rounded-sm border-2 border-emerald-950" />
                       </div>
-                      <div className="text-[0.55rem] font-mono text-white text-center font-bold tracking-widest">
+                      <div className="text-[0.65rem] font-mono text-white text-center font-bold tracking-widest">
                         TIJORI-PAY
                       </div>
                       <div className="flex justify-between items-end">
@@ -203,14 +203,14 @@ export function UpiModal({ open, onOpenChange, amount, onSuccess }: UpiModalProp
                       </div>
                     </div>
                   </div>
-                  <p className="text-[0.72rem] text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Scan with any UPI app to transfer <strong>{formatRupees(amount)}</strong>
                   </p>
                 </TabsContent>
               </Tabs>
 
               {/* Security confirmation badge */}
-              <div className="rounded-xl bg-muted/50 p-2.5 px-3 text-[0.7rem] text-muted-foreground flex items-center justify-between">
+              <div className="rounded-xl bg-muted/50 p-2.5 px-3 text-xs text-muted-foreground flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
                   <Lock className="size-3.5 text-emerald-600" />
                   Protected by Tijori Escrow Guarantee

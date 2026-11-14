@@ -66,15 +66,15 @@ export function AiVerdictCard({ verdict, dealAmount, onAccept }: AiVerdictCardPr
               <Bot className="size-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold tracking-tight flex items-center gap-1.5">
+              <h3 className="text-sm font-bold tracking-tight flex items-center gap-1.5">
                 Panchayat AI™ Advisory
-                <Sparkles className="size-3 text-amber-500" />
+                <Sparkles className="size-3.5 text-amber-500" />
               </h3>
-              <p className="text-[0.68rem] text-muted-foreground">Neural Contract Verification</p>
+              <p className="text-xs text-muted-foreground">Neural Contract Verification</p>
             </div>
           </div>
 
-          <Badge className={cn("text-[0.68rem] font-bold border", meta.badgeClass)}>
+          <Badge className={cn("text-xs font-bold border px-2.5 py-0.5", meta.badgeClass)}>
             {meta.label}
           </Badge>
         </div>
@@ -103,17 +103,17 @@ export function AiVerdictCard({ verdict, dealAmount, onAccept }: AiVerdictCardPr
         </div>
 
         {/* Reasoning */}
-        <div className="space-y-1">
-          <p className="text-[0.7rem] uppercase tracking-wider font-semibold text-muted-foreground">
+        <div className="space-y-1.5">
+          <p className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">
             Arbitration Rationale
           </p>
-          <div className="rounded-lg bg-muted/40 p-3 text-xs leading-relaxed text-foreground border border-border/40">
+          <div className="rounded-lg bg-muted/40 p-3.5 text-sm leading-relaxed text-foreground border border-border/40">
             {verdict.reasoning}
           </div>
         </div>
 
         {/* Legal Disclaimer */}
-        <p className="text-[0.68rem] italic text-muted-foreground/80 leading-tight">
+        <p className="text-xs italic text-muted-foreground/90 leading-relaxed">
           ⚖️ AI suggestions are non-binding recommendations. The platform arbitrator holds final discretion to ratify or modify this ruling.
         </p>
 

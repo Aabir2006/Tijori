@@ -89,11 +89,11 @@ export function Navbar() {
             <div className="flex flex-col">
               <span className="text-base font-bold tracking-tight text-foreground leading-none flex items-center gap-1.5">
                 TIJORI
-                <span className="rounded bg-emerald-100 dark:bg-emerald-950/60 px-1 py-0.2 text-[0.62rem] font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
+                <span className="rounded bg-emerald-100 dark:bg-emerald-950/60 px-1.5 py-0.5 text-[0.72rem] font-semibold text-emerald-800 dark:text-emerald-300 tracking-wider">
                   ESCROW
                 </span>
               </span>
-              <span className="text-[0.65rem] text-muted-foreground font-medium tracking-wide">
+              <span className="text-sm text-muted-foreground font-medium tracking-wide">
                 UPI Protection Network
               </span>
             </div>
@@ -133,18 +133,17 @@ export function Navbar() {
 
         {/* Right Section */}
         <div className="flex items-center gap-2.5">
-          {/* Venom Symbiote Theme Toggle */}
           <ThemeToggle />
 
           {isAuthenticated && user ? (
             <>
               {/* Role Indicator & Fast Switcher */}
               <DropdownMenu>
-                <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-lg border border-border bg-card px-2.5 h-8 gap-1.5 text-xs font-medium hover:bg-muted/60 transition-colors cursor-pointer outline-none">
-                  <RoleIcon className="size-3.5 text-muted-foreground" />
+                <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-lg border border-border bg-card px-3 h-9 gap-2 text-sm font-medium hover:bg-muted/60 transition-colors cursor-pointer outline-none">
+                  <RoleIcon className="size-4 text-muted-foreground" />
                   <span className="hidden sm:inline">Workspace:</span>
                   <span className="font-semibold text-foreground">{roleInfo.label}</span>
-                  <ChevronDown className="size-3 text-muted-foreground opacity-60" />
+                  <ChevronDown className="size-3.5 text-muted-foreground opacity-60" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 p-1">
                   <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
@@ -152,22 +151,22 @@ export function Navbar() {
                   </DropdownMenuLabel>
                   <DropdownMenuItem
                     onClick={() => handleRoleChange("SELLER")}
-                    className={`flex items-center gap-2 text-xs font-medium ${
+                    className={`flex items-center gap-2 text-sm font-medium ${
                       user.role === "SELLER" ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 font-semibold" : ""
                     }`}
                   >
-                    <Briefcase className="size-3.5 text-emerald-600" />
+                    <Briefcase className="size-4 text-emerald-600" />
                     Freelancer / Seller
-                    {user.role === "SELLER" && <CheckCircle2 className="size-3.5 ml-auto text-emerald-600" />}
+                    {user.role === "SELLER" && <CheckCircle2 className="size-4 ml-auto text-emerald-600" />}
                   </DropdownMenuItem>
 
                   <DropdownMenuItem
                     onClick={() => handleRoleChange("BUYER")}
-                    className={`flex items-center gap-2 text-xs font-medium ${
+                    className={`flex items-center gap-2 text-sm font-medium ${
                       user.role === "BUYER" ? "bg-blue-50 text-blue-800 dark:bg-blue-950/40 font-semibold" : ""
                     }`}
                   >
-                    <ShoppingBag className="size-3.5 text-blue-600" />
+                    <ShoppingBag className="size-4 text-blue-600" />
                     Client / Buyer
                     {user.role === "BUYER" && <CheckCircle2 className="size-3.5 ml-auto text-blue-600" />}
                   </DropdownMenuItem>
@@ -175,24 +174,24 @@ export function Navbar() {
                   {user.role === "ADMIN" && (
                     <DropdownMenuItem
                       onClick={() => handleRoleChange("ADMIN")}
-                      className={`flex items-center gap-2 text-xs font-medium ${
+                      className={`flex items-center gap-2 text-sm font-medium ${
                         user.role === "ADMIN" ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 font-semibold" : ""
                       }`}
                     >
-                      <Scale className="size-3.5 text-amber-600" />
+                      <Scale className="size-4 text-amber-600" />
                       Arbitrator / Admin
-                      <CheckCircle2 className="size-3.5 ml-auto text-amber-600" />
+                      <CheckCircle2 className="size-4 ml-auto text-amber-600" />
                     </DropdownMenuItem>
                   )}
 
                   <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-[0.68rem] text-muted-foreground font-normal">
+                  <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
                     Switch Verified Persona
                   </DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => loginAsPreset("seller")} className="text-xs">
+                  <DropdownMenuItem onClick={() => loginAsPreset("seller")} className="text-sm">
                     Arjun Verma (Creative Lead)
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => loginAsPreset("buyer")} className="text-xs">
+                  <DropdownMenuItem onClick={() => loginAsPreset("buyer")} className="text-sm">
                     Rohan Mehta (Tech Lead)
                   </DropdownMenuItem>
                   {user.role === "ADMIN" && (
@@ -235,14 +234,14 @@ export function Navbar() {
                         )}
                       </div>
                       <span className="text-xs text-muted-foreground truncate">{user.email}</span>
-                      <span className="text-[0.68rem] text-emerald-700 dark:text-emerald-400 font-medium">
+                      <span className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">
                         {user.roleTitle || roleInfo.label}
                       </span>
                     </div>
                   </div>
 
                   {user.upiId && (
-                    <div className="mx-2 mb-2 rounded-md bg-muted/60 p-1.5 px-2 text-[0.7rem] text-muted-foreground flex justify-between">
+                    <div className="mx-2 mb-2 rounded-md bg-muted/60 p-1.5 px-2 text-xs text-muted-foreground flex justify-between">
                       <span>UPI VPA</span>
                       <span className="font-mono text-foreground font-medium">{user.upiId}</span>
                     </div>

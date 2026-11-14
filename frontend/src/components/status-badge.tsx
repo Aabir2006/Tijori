@@ -53,7 +53,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
     <Badge
       className={cn(
-        "border-0 text-[0.7rem] font-semibold",
+        "border-0 text-xs font-semibold px-2.5 py-0.5",
         config.classes,
         className
       )}

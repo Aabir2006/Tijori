@@ -92,7 +92,7 @@ export default function RegisterPage() {
                 <ShieldCheck className="size-5" />
               </div>
               <CardTitle className="text-2xl font-bold tracking-tight">Create your account</CardTitle>
-              <CardDescription className="text-xs">
+              <CardDescription className="text-sm">
                 Start securing freelance milestones and project payments with UPI Escrow.
               </CardDescription>
             </CardHeader>
@@ -100,15 +100,15 @@ export default function RegisterPage() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-semibold">I want to join as</Label>
+                  <Label className="text-sm font-semibold">I want to join as</Label>
                   <Tabs value={role} onValueChange={(v) => setRole(v as Role)} className="w-full">
-                    <TabsList className="grid grid-cols-2 w-full h-9">
-                      <TabsTrigger value="SELLER" className="text-xs gap-1.5 font-medium">
-                        <Briefcase className="size-3.5" />
+                    <TabsList className="grid grid-cols-2 w-full h-10">
+                      <TabsTrigger value="SELLER" className="text-sm gap-1.5 font-medium">
+                        <Briefcase className="size-4" />
                         Freelancer / Seller
                       </TabsTrigger>
-                      <TabsTrigger value="BUYER" className="text-xs gap-1.5 font-medium">
-                        <ShoppingBag className="size-3.5" />
+                      <TabsTrigger value="BUYER" className="text-sm gap-1.5 font-medium">
+                        <ShoppingBag className="size-4" />
                         Client / Buyer
                       </TabsTrigger>
                     </TabsList>
@@ -116,7 +116,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-xs">Full Name / Agency</Label>
+                  <Label htmlFor="name" className="text-sm font-medium">Full Name / Agency</Label>
                   <div className="relative">
                     <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
@@ -132,7 +132,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-xs">Work Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium">Work Email</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
@@ -149,7 +149,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-xs">Mobile Number (for UPI alerts)</Label>
+                  <Label htmlFor="phone" className="text-sm font-medium">Mobile Number (for UPI alerts)</Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
@@ -165,7 +165,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-xs">Create Password</Label>
+                  <Label htmlFor="password" className="text-sm font-medium">Create Password</Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
@@ -181,7 +181,7 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <div className="rounded-lg bg-emerald-50/70 dark:bg-emerald-950/30 p-2.5 text-[0.72rem] text-emerald-800 dark:text-emerald-300 flex items-start gap-2">
+                <div className="rounded-lg bg-emerald-50/70 dark:bg-emerald-950/30 p-2.5 text-xs text-emerald-800 dark:text-emerald-300 flex items-start gap-2 leading-relaxed">
                   <CheckCircle2 className="size-4 shrink-0 mt-0.5 text-emerald-600" />
                   <span>
                     Your funds are held in zero-interest nodal escrow accounts adhering to RBI
@@ -209,7 +209,7 @@ export default function RegisterPage() {
               </form>
             </CardContent>
 
-            <CardFooter className="pt-0 pb-5 text-center justify-center text-[0.7rem] text-muted-foreground">
+            <CardFooter className="pt-0 pb-5 text-center justify-center text-xs text-muted-foreground">
               By registering, you agree to Tijori&apos;s Terms of Escrow Service & Privacy Policy.
             </CardFooter>
           </Card>

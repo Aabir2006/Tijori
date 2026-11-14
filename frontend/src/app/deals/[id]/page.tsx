@@ -445,14 +445,14 @@ function DealDetailContent() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
           <Link
             href="/dashboard"
-            className="inline-flex items-center text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ArrowLeft className="mr-1.5 size-3.5" />
+            <ArrowLeft className="mr-1.5 size-4" />
             Back to Dashboard
           </Link>
 
           <div className="flex items-center gap-2">
-            <span className="text-[0.68rem] text-muted-foreground font-mono bg-muted px-2 py-0.5 rounded">
+            <span className="text-sm text-muted-foreground font-mono bg-muted px-2.5 py-1 rounded">
               CONTRACT: {deal.id}
             </span>
 
@@ -460,9 +460,9 @@ function DealDetailContent() {
               variant="outline"
               size="sm"
               onClick={handleCopyLink}
-              className="h-7 text-[0.7rem] gap-1 px-2.5 border-border"
+              className="h-9 text-sm gap-1.5 px-3.5 border-border"
             >
-              {copied ? <Check className="size-3 text-emerald-600" /> : <Copy className="size-3" />}
+              {copied ? <Check className="size-3.5 text-emerald-600" /> : <Copy className="size-3.5" />}
               {copied ? "Copied" : "Copy Link"}
             </Button>
 
@@ -470,9 +470,9 @@ function DealDetailContent() {
               variant="outline"
               size="sm"
               onClick={handleWhatsAppShare}
-              className="h-7 text-[0.7rem] gap-1 px-2.5 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
+              className="h-9 text-sm gap-1.5 px-3.5 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
             >
-              <Share2 className="size-3" />
+              <Share2 className="size-3.5" />
               WhatsApp
             </Button>
           </div>
@@ -514,41 +514,41 @@ function DealDetailContent() {
             {/* Contract Specifications */}
             <Card className="border-border shadow-sm">
               <CardHeader className="pb-3 border-b">
-                <CardTitle className="text-sm font-bold flex items-center justify-between">
+                <CardTitle className="text-base font-bold flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <FileText className="size-4 text-emerald-600" />
                     Agreed Scope of Work
                   </span>
-                  <Badge variant="outline" className="text-[0.65rem] font-medium text-muted-foreground">
+                  <Badge variant="outline" className="text-xs px-2 py-0.5 font-medium text-muted-foreground">
                     Binding Terms
                   </Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-4 space-y-4">
-                <div className="rounded-xl bg-muted/40 p-4 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-sans">
+                <div className="rounded-xl bg-muted/40 p-4 text-sm sm:text-base leading-relaxed whitespace-pre-wrap font-sans">
                   {deal.description}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs border-t">
                   <div className="space-y-1">
-                    <span className="text-muted-foreground flex items-center gap-1 text-[0.7rem]">
+                    <span className="text-muted-foreground flex items-center gap-1 text-xs">
                       <User className="size-3" /> Freelancer / Seller
                     </span>
-                    <p className="font-semibold text-foreground flex items-center gap-1">
+                    <p className="font-semibold text-foreground flex items-center gap-1 text-sm">
                       {deal.sellerName}
-                      <CheckCircle2 className="size-3 text-emerald-600 shrink-0" />
+                      <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0" />
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-muted-foreground flex items-center gap-1 text-[0.7rem]">
+                    <span className="text-muted-foreground flex items-center gap-1 text-xs">
                       <User className="size-3" /> Client / Buyer
                     </span>
-                    <p className="font-semibold text-foreground">
+                    <p className="font-semibold text-foreground text-sm">
                       {deal.buyerName ? (
                         <span className="flex items-center gap-1">
                           {deal.buyerName}
-                          <CheckCircle2 className="size-3 text-blue-600 shrink-0" />
+                          <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
                         </span>
                       ) : (
                         <span className="italic text-muted-foreground">Awaiting Client Payment</span>
@@ -557,10 +557,10 @@ function DealDetailContent() {
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-muted-foreground flex items-center gap-1 text-[0.7rem]">
+                    <span className="text-muted-foreground flex items-center gap-1 text-xs">
                       <Calendar className="size-3" /> Initiated
                     </span>
-                    <p className="font-semibold text-foreground">{timeAgo(deal.createdAt)}</p>
+                    <p className="font-semibold text-foreground text-sm">{timeAgo(deal.createdAt)}</p>
                   </div>
                 </div>
               </CardContent>
@@ -570,13 +570,13 @@ function DealDetailContent() {
             {deal.deliveryProof && (
               <Card className="border-purple-200/80 bg-purple-50/20 dark:bg-purple-950/20 shadow-sm">
                 <CardHeader className="pb-2 border-b border-purple-200/50">
-                  <CardTitle className="text-sm font-bold flex items-center gap-2 text-purple-900 dark:text-purple-300">
-                    <CheckCircle2 className="size-4 text-purple-600" />
+                  <CardTitle className="text-base font-bold flex items-center gap-2 text-purple-900 dark:text-purple-300">
+                    <CheckCircle2 className="size-4.5 text-purple-600" />
                     Submitted Deliverables &amp; Artifacts
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 space-y-2">
-                  <div className="rounded-xl bg-background p-3.5 text-xs border">
+                  <div className="rounded-xl bg-background p-4 text-sm border leading-relaxed">
                     {isUrl(deal.deliveryProof) ? (
                       <a
                         href={deal.deliveryProof}
@@ -591,7 +591,7 @@ function DealDetailContent() {
                       <p className="whitespace-pre-wrap">{deal.deliveryProof}</p>
                     )}
                   </div>
-                  <p className="text-[0.7rem] text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Submitted by freelancer as formal fulfillment proof of contract scope.
                   </p>
                 </CardContent>
@@ -608,10 +608,10 @@ function DealDetailContent() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 space-y-2">
-                  <div className="rounded-xl bg-background p-3.5 text-xs text-red-950 dark:text-red-200 border border-red-200">
+                  <div className="rounded-xl bg-background p-3.5 text-sm text-red-950 dark:text-red-200 border border-red-200">
                     {deal.disputeReason}
                   </div>
-                  <p className="text-[0.7rem] text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Logged with Panchayat AI for automated evaluation and compliance review.
                   </p>
                 </CardContent>
@@ -626,7 +626,7 @@ function DealDetailContent() {
                     <Scale className="size-4 text-amber-600" />
                     Arbitrator Case Dossier
                   </CardTitle>
-                  <CardDescription className="text-xs">
+                  <CardDescription className="text-sm">
                     Objective comparison of contractual agreement vs. delivered proof.
                   </CardDescription>
                 </CardHeader>
@@ -636,12 +636,12 @@ function DealDetailContent() {
                       <p className="font-bold text-foreground flex items-center gap-1.5">
                         <FileText className="size-3.5 text-emerald-600" /> 1. Contract Specifications
                       </p>
-                      <p className="text-muted-foreground leading-relaxed text-[0.72rem]">
+                      <p className="text-muted-foreground leading-relaxed text-xs">
                         {deal.description}
                       </p>
                       <div className="pt-2 border-t">
                         <p className="font-bold text-foreground">2. Seller Proof</p>
-                        <p className="text-muted-foreground leading-relaxed text-[0.72rem] mt-0.5">
+                        <p className="text-muted-foreground leading-relaxed text-xs mt-0.5">
                           {deal.deliveryProof || "No proof attached"}
                         </p>
                       </div>
@@ -651,12 +651,12 @@ function DealDetailContent() {
                       <p className="font-bold text-red-700 flex items-center gap-1.5">
                         <AlertTriangle className="size-3.5 text-red-600" /> 3. Client Dispute Claim
                       </p>
-                      <p className="text-red-900 dark:text-red-200 leading-relaxed text-[0.72rem]">
+                      <p className="text-red-900 dark:text-red-200 leading-relaxed text-xs">
                         {deal.disputeReason}
                       </p>
                       <div className="pt-2 border-t">
                         <p className="font-bold text-foreground">4. Nodal Escrow Deposit</p>
-                        <p className="text-muted-foreground text-[0.72rem] mt-0.5 font-mono">
+                        <p className="text-muted-foreground text-xs mt-0.5 font-mono">
                           {formatRupees(deal.amount)} held under Tijori protection escrow.
                         </p>
                       </div>
@@ -676,7 +676,7 @@ function DealDetailContent() {
               <CardHeader className="pb-3 border-b">
                 <CardTitle className="text-sm font-bold flex items-center justify-between">
                   <span>Contract Actions</span>
-                  <Badge variant="outline" className="text-[0.68rem] capitalize font-medium">
+                  <Badge variant="outline" className="text-xs px-2 py-0.5 capitalize font-medium">
                     {role.toLowerCase()} perspective
                   </Badge>
                 </CardTitle>
@@ -693,7 +693,7 @@ function DealDetailContent() {
                             <Clock className="size-4 text-amber-600" />
                             Awaiting Client Escrow Deposit
                           </p>
-                          <p className="text-[0.72rem]">
+                          <p className="text-xs leading-relaxed">
                             The client ({deal.buyerName || "Client"}) has posted this project. Once they deposit {formatRupees(deal.amount)} into
                             Tijori Escrow via UPI, you can commence work and submit deliverables.
                           </p>
@@ -704,8 +704,8 @@ function DealDetailContent() {
                     {isBuyer && (
                       <div className="space-y-3">
                         <div className="rounded-xl bg-blue-50 dark:bg-blue-950/40 p-3 text-xs text-blue-900 dark:text-blue-200 border border-blue-200/60">
-                          <p className="font-semibold">Fund Escrow to Start Project</p>
-                          <p className="text-[0.7rem] mt-0.5">
+                          <p className="font-semibold text-sm">Fund Escrow to Start Project</p>
+                          <p className="text-xs mt-0.5 leading-relaxed">
                             Your payment is held safely in regulated escrow. Funds are only disbursed to
                             the freelancer once you inspect and approve the completed scope.
                           </p>
@@ -739,7 +739,7 @@ function DealDetailContent() {
                     )}
 
                     {isAdmin && (
-                      <p className="text-xs text-muted-foreground italic">
+                      <p className="text-sm text-muted-foreground italic">
                         Contract initiated. Awaiting client escrow deposit.
                       </p>
                     )}
@@ -752,8 +752,8 @@ function DealDetailContent() {
                     {isSeller && (
                       <form onSubmit={handleSubmitDelivery} className="space-y-3">
                         <div className="rounded-xl bg-emerald-50 dark:bg-emerald-950/40 p-3 text-xs text-emerald-900 dark:text-emerald-200 border border-emerald-200/60">
-                          <p className="font-semibold">Funds Verified in Escrow</p>
-                          <p className="text-[0.7rem] mt-0.5">
+                          <p className="font-semibold text-sm">Funds Verified in Escrow</p>
+                          <p className="text-xs mt-0.5 leading-relaxed">
                             {formatRupees(deal.amount)} is secured. Work with total confidence and submit your completed deliverables below.
                           </p>
                         </div>
@@ -770,14 +770,14 @@ function DealDetailContent() {
                             onChange={(e) => setDeliveryInput(e.target.value)}
                             disabled={isDelivering}
                             required
-                            className="text-xs"
+                            className="text-sm"
                           />
                         </div>
 
                         <Button
                           type="submit"
                           disabled={isDelivering}
-                          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2 text-xs font-semibold h-10 shadow-sm"
+                          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2 text-sm font-semibold h-10 shadow-sm"
                         >
                           {isDelivering ? (
                             <>
@@ -798,8 +798,8 @@ function DealDetailContent() {
                       <div className="flex items-center gap-3 p-3.5 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 text-blue-950 dark:text-blue-200 border border-blue-200/60">
                         <Clock className="size-5 text-blue-600 shrink-0" />
                         <div className="text-xs">
-                          <p className="font-semibold">Freelancer is Working</p>
-                          <p className="text-muted-foreground mt-0.5 text-[0.7rem]">
+                          <p className="font-semibold text-sm">Freelancer is Working</p>
+                          <p className="text-muted-foreground mt-0.5 text-xs leading-relaxed">
                             Your {formatRupees(deal.amount)} is secured in escrow. You will be prompted to approve the release once deliverables are submitted.
                           </p>
                         </div>
@@ -807,7 +807,7 @@ function DealDetailContent() {
                     )}
 
                     {isAdmin && (
-                      <p className="text-xs text-muted-foreground italic">
+                      <p className="text-sm text-muted-foreground italic">
                         Funds locked in escrow. Freelancer actively executing agreed scope.
                       </p>
                     )}
@@ -821,8 +821,8 @@ function DealDetailContent() {
                       <div className="flex items-center gap-3 p-3.5 rounded-xl bg-purple-50/60 dark:bg-purple-950/30 text-purple-950 dark:text-purple-200 border border-purple-200/60">
                         <Clock className="size-5 text-purple-600 shrink-0" />
                         <div className="text-xs">
-                          <p className="font-semibold">Deliverables Submitted</p>
-                          <p className="text-muted-foreground mt-0.5 text-[0.7rem]">
+                          <p className="font-semibold text-sm">Deliverables Submitted</p>
+                          <p className="text-muted-foreground mt-0.5 text-xs leading-relaxed">
                             Awaiting client inspection and payout approval.
                           </p>
                         </div>
@@ -832,8 +832,8 @@ function DealDetailContent() {
                     {isBuyer && (
                       <div className="space-y-3">
                         <div className="rounded-xl bg-purple-50 dark:bg-purple-950/40 p-3 text-xs text-purple-950 dark:text-purple-200 border border-purple-200/60">
-                          <p className="font-semibold">Review Deliverables</p>
-                          <p className="text-[0.7rem] mt-0.5">
+                          <p className="font-semibold text-sm">Review Deliverables</p>
+                          <p className="text-xs mt-0.5 leading-relaxed">
                             Inspect the submitted artifacts on the left. If everything matches the agreed scope, release the payment.
                           </p>
                         </div>
@@ -874,7 +874,7 @@ function DealDetailContent() {
                         <ShieldAlert className="size-6 text-red-600 shrink-0" />
                         <div className="text-xs space-y-1">
                           <p className="font-bold">Under Panchayat AI Mediation</p>
-                          <p className="text-muted-foreground text-[0.72rem] leading-relaxed">
+                          <p className="text-muted-foreground text-xs leading-relaxed">
                             Our arbitration engine is analyzing the contract specifications, delivery proof,
                             and grievance. Compliance officers will issue a binding resolution shortly.
                           </p>
@@ -936,7 +936,7 @@ function DealDetailContent() {
                       <CheckCircle2 className="size-5" />
                     </div>
                     <p className="font-bold text-sm text-foreground">Escrow Successfully Settled</p>
-                    <p className="text-muted-foreground text-[0.72rem]">
+                    <p className="text-muted-foreground text-xs leading-relaxed">
                       {deal.status === "COMPLETED" && "Deliverables verified and full payment disbursed to seller."}
                       {deal.status === "RESOLVED_RELEASED" && "Dispute resolved by compliance: Funds released to seller."}
                       {deal.status === "RESOLVED_REFUNDED" && "Dispute resolved by compliance: Funds refunded to client."}
@@ -955,7 +955,7 @@ function DealDetailContent() {
                     <Clock className="size-4 text-muted-foreground" />
                     Contract Audit Log
                   </span>
-                  <span className="text-[0.65rem] text-muted-foreground font-mono">
+                  <span className="text-xs text-muted-foreground font-mono">
                     Immutable
                   </span>
                 </CardTitle>
@@ -1064,7 +1064,7 @@ function DealDetailContent() {
                 />
               </div>
 
-              <div className="rounded-xl bg-muted/60 p-3 text-[0.72rem] text-muted-foreground flex items-start gap-2">
+              <div className="rounded-xl bg-muted/60 p-3 text-xs text-muted-foreground flex items-start gap-2 leading-relaxed">
                 <Sparkles className="size-4 text-amber-500 shrink-0 mt-0.5" />
                 <span>
                   Our neural arbitration model will review both sides and recommend a fair settlement
@@ -1102,7 +1102,7 @@ function DealDetailContent() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Arbitrator Pro-Rata Split</DialogTitle>
-            <DialogDescription className="text-xs">
+            <DialogDescription className="text-sm">
               Determine the settlement percentage between freelancer deliverables and client refund.
             </DialogDescription>
           </DialogHeader>
@@ -1126,13 +1126,13 @@ function DealDetailContent() {
 
             <div className="rounded-xl bg-muted p-3.5 grid grid-cols-2 gap-2 text-center text-xs">
               <div className="space-y-0.5">
-                <p className="text-muted-foreground text-[0.7rem]">Freelancer Receives</p>
+                <p className="text-muted-foreground text-xs font-medium">Freelancer Receives</p>
                 <p className="font-bold text-base text-emerald-600">
                   {formatRupees(Math.round((deal.amount * sellerSplitPercent) / 100))}
                 </p>
               </div>
               <div className="space-y-0.5">
-                <p className="text-muted-foreground text-[0.7rem]">Client Refund</p>
+                <p className="text-muted-foreground text-xs font-medium">Client Refund</p>
                 <p className="font-bold text-base text-blue-600">
                   {formatRupees(deal.amount - Math.round((deal.amount * sellerSplitPercent) / 100))}
                 </p>

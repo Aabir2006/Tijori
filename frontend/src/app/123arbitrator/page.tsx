@@ -117,7 +117,7 @@ export default function ArbitratorPortalPage() {
               <CardTitle className="text-xl font-bold tracking-tight text-foreground">
                 Arbitrator Access Restricted
               </CardTitle>
-              <CardDescription className="text-xs mt-1.5 leading-relaxed">
+              <CardDescription className="text-sm mt-1.5 leading-relaxed">
                 You are currently signed in as{" "}
                 <strong className="text-foreground">{user.name}</strong> with the{" "}
                 <span className="font-semibold text-foreground">
@@ -128,12 +128,12 @@ export default function ArbitratorPortalPage() {
             </CardHeader>
 
             <CardContent className="space-y-3 pt-2">
-              <div className="rounded-xl border border-border/80 bg-muted/40 p-3 text-xs space-y-1.5 text-muted-foreground">
-                <div className="flex items-center gap-1.5 font-medium text-foreground">
+              <div className="rounded-xl border border-border/80 bg-muted/40 p-3.5 text-xs space-y-1.5 text-muted-foreground">
+                <div className="flex items-center gap-1.5 font-medium text-foreground text-xs">
                   <Lock className="size-3.5 text-red-600" />
                   Regulatory Segregation Policy
                 </div>
-                <p className="text-[0.72rem] leading-relaxed">
+                <p className="text-xs leading-relaxed">
                   Under Tijori Escrow Compliance rules, buyers and sellers are barred from viewing judicial dossier evidence, neural weights, and dispute override controls of other counterparties.
                 </p>
               </div>
@@ -159,7 +159,7 @@ export default function ArbitratorPortalPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="pt-0 justify-center text-[0.68rem] text-muted-foreground border-t border-border/40 py-3">
+            <CardFooter className="pt-0 justify-center text-xs text-muted-foreground border-t border-border/40 py-3">
               Tijori Judicial Network · Clearance Level 3
             </CardFooter>
           </Card>
@@ -188,7 +188,7 @@ export default function ArbitratorPortalPage() {
               <CardTitle className="text-2xl font-extrabold tracking-tight">
                 Arbitrator Clearance Desk
               </CardTitle>
-              <CardDescription className="text-xs mt-1">
+              <CardDescription className="text-sm mt-1">
                 Restricted portal for certified dispute arbitrators & legal compliance officers.
               </CardDescription>
             </CardHeader>
@@ -196,7 +196,7 @@ export default function ArbitratorPortalPage() {
             <CardContent className="space-y-4">
               <form onSubmit={handleArbitratorLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-xs font-semibold">Judicial Passkey / Security Clearance ID</Label>
+                  <Label className="text-sm font-semibold">Judicial Passkey / Security Clearance ID</Label>
                   <div className="relative">
                     <KeyRound className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
                     <Input
@@ -204,10 +204,10 @@ export default function ArbitratorPortalPage() {
                       placeholder="TIJORI-ARBITRATOR-PIN"
                       value={clearanceKey}
                       onChange={(e) => setClearanceKey(e.target.value)}
-                      className="pl-9 font-mono text-xs tracking-wider"
+                      className="pl-9 font-mono text-sm tracking-wider h-10"
                     />
                   </div>
-                  <p className="text-[0.68rem] text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     Demo key is pre-authorized. Click below to verify credentials.
                   </p>
                 </div>
@@ -215,7 +215,7 @@ export default function ArbitratorPortalPage() {
                 <Button
                   type="submit"
                   disabled={isVerifying}
-                  className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs h-10 gap-2 shadow-sm"
+                  className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm h-10 gap-2 shadow-sm"
                 >
                   {isVerifying ? (
                     <>Verifying Clearance Key…</>
@@ -230,17 +230,17 @@ export default function ArbitratorPortalPage() {
               </form>
 
               <div className="rounded-xl border border-amber-200/60 dark:border-amber-950 bg-amber-50/50 dark:bg-amber-950/20 p-3 text-xs space-y-1">
-                <div className="font-semibold text-amber-900 dark:text-amber-200 flex items-center gap-1.5">
+                <div className="font-semibold text-amber-900 dark:text-amber-200 flex items-center gap-1.5 text-xs">
                   <Sparkles className="size-3.5" />
                   Panchayat AI Audit Engine
                 </div>
-                <p className="text-[0.7rem] text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Arbitrators receive automated natural language briefings, contract delta checks, and pro-rata settlement recommendations for all disputed escrow transactions.
                 </p>
               </div>
             </CardContent>
 
-            <CardFooter className="pt-0 justify-between text-[0.7rem] text-muted-foreground border-t border-border/40 py-3">
+            <CardFooter className="pt-0 justify-between text-xs text-muted-foreground border-t border-border/40 py-3">
               <span className="flex items-center gap-1">
                 <Lock className="size-3 text-emerald-600" /> 256-bit Encrypted Judicial Session
               </span>
@@ -318,7 +318,7 @@ export default function ArbitratorPortalPage() {
               <div className="text-2xl font-black text-red-600">
                 {disputedDeals.length}
               </div>
-              <p className="text-[0.68rem] text-red-600 font-medium">
+              <p className="text-xs text-red-600 font-medium">
                 {disputedDeals.length > 0 ? "Requires arbitrator ruling" : "All cases settled"}
               </p>
             </CardContent>
@@ -333,7 +333,7 @@ export default function ArbitratorPortalPage() {
               <div className="text-2xl font-black text-foreground">
                 {formatRupees(totalDisputedAmount)}
               </div>
-              <p className="text-[0.68rem] text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Held safely in Tijori vault
               </p>
             </CardContent>
@@ -348,7 +348,7 @@ export default function ArbitratorPortalPage() {
               <div className="text-2xl font-black text-emerald-600">
                 {resolvedDeals.length}
               </div>
-              <p className="text-[0.68rem] text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Pro-rata & full rulings
               </p>
             </CardContent>
@@ -363,7 +363,7 @@ export default function ArbitratorPortalPage() {
               <div className="text-2xl font-black text-foreground">
                 98.4%
               </div>
-              <p className="text-[0.68rem] text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Arbitrator agreement rate
               </p>
             </CardContent>
@@ -408,13 +408,13 @@ export default function ArbitratorPortalPage() {
                       <CardHeader className="pb-3">
                         <div className="flex items-start justify-between gap-2">
                           <div className="space-y-1">
-                            <Badge className="bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-0 text-[0.65rem] font-bold">
+                            <Badge className="bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-0 text-xs px-2 py-0.5 font-bold">
                               HIGH PRIORITY ARBITRATION
                             </Badge>
                             <CardTitle className="text-base font-bold line-clamp-1">
                               {deal.title}
                             </CardTitle>
-                            <CardDescription className="text-xs">
+                            <CardDescription className="text-sm">
                               {deal.sellerName} (Seller) vs {deal.buyerName || "Buyer"}
                             </CardDescription>
                           </div>
@@ -422,7 +422,7 @@ export default function ArbitratorPortalPage() {
                             <span className="text-lg font-black text-foreground">
                               {formatRupees(deal.amount)}
                             </span>
-                            <span className="block text-[0.65rem] text-muted-foreground">
+                            <span className="block text-xs text-muted-foreground">
                               Locked in Escrow
                             </span>
                           </div>
@@ -433,7 +433,7 @@ export default function ArbitratorPortalPage() {
                         {/* Dispute claim */}
                         {deal.disputeReason && (
                           <div className="rounded-lg bg-red-50/60 dark:bg-red-950/30 border border-red-200/60 p-2.5 text-xs text-red-900 dark:text-red-200">
-                            <strong className="block text-[0.68rem] text-red-700 uppercase font-bold tracking-wider mb-0.5">
+                            <strong className="block text-xs text-red-700 uppercase font-bold tracking-wider mb-0.5">
                               Client Grievance Claim:
                             </strong>
                             &ldquo;{deal.disputeReason}&rdquo;
@@ -449,12 +449,12 @@ export default function ArbitratorPortalPage() {
                                 Panchayat AI: {deal.aiVerdict.verdict}
                               </span>
                               {deal.aiVerdict.verdict === "SPLIT" && (
-                                <span className="font-mono text-[0.7rem] bg-amber-100/80 px-2 py-0.5 rounded">
+                                <span className="font-mono text-xs font-semibold bg-amber-100/80 px-2 py-0.5 rounded">
                                   ₹{deal.aiVerdict.sellerAmount} / ₹{deal.aiVerdict.buyerAmount}
                                 </span>
                               )}
                             </div>
-                            <p className="text-muted-foreground line-clamp-3 text-[0.72rem] leading-relaxed">
+                            <p className="text-muted-foreground line-clamp-3 text-xs leading-relaxed">
                               {deal.aiVerdict.reasoning}
                             </p>
                           </div>
@@ -492,15 +492,15 @@ export default function ArbitratorPortalPage() {
                   >
                     <div className="flex items-start justify-between gap-2">
                       <span className="font-semibold text-sm line-clamp-1">{deal.title}</span>
-                      <Badge variant="outline" className="text-[0.65rem] shrink-0">
+                      <Badge variant="outline" className="text-xs px-2 py-0.5 shrink-0">
                         {deal.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center justify-between text-muted-foreground text-[0.72rem]">
+                    <div className="flex items-center justify-between text-muted-foreground text-xs">
                       <span>{deal.sellerName} → {deal.buyerName || "Unassigned"}</span>
                       <span className="font-bold text-foreground">{formatRupees(deal.amount)}</span>
                     </div>
-                    <div className="text-[0.65rem] text-muted-foreground border-t border-border/40 pt-2 flex items-center justify-between">
+                    <div className="text-xs text-muted-foreground border-t border-border/40 pt-2 flex items-center justify-between">
                       <span>Created {timeAgo(deal.createdAt)}</span>
                       <span className="text-emerald-600 font-medium flex items-center gap-0.5">
                         Inspect <ExternalLink className="size-2.5" />

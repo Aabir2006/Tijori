@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/lib/auth-context";
 import { ThemeProvider } from "@/lib/theme-context";
-import { VenomThemeTransition } from "@/components/venom-theme-transition";
+import { ThemeSlideTransition } from "@/components/venom-theme-transition";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -56,7 +56,7 @@ export default function RootLayout({
           <AuthProvider>
             <TooltipProvider>
               {children}
-              <VenomThemeTransition />
+              <ThemeSlideTransition />
             </TooltipProvider>
           </AuthProvider>
         </ThemeProvider>

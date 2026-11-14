@@ -230,7 +230,7 @@ export default function DashboardPage() {
                 Welcome, {userName}
               </h1>
               {user?.isVerified && (
-                <Badge className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200/60 gap-1 text-[0.68rem] font-semibold">
+                <Badge className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200/60 gap-1 text-xs font-semibold px-2 py-0.5">
                   <ShieldCheck className="size-3 text-emerald-600" />
                   Verified KYC
                 </Badge>
@@ -333,7 +333,7 @@ export default function DashboardPage() {
                         <p className="text-2xl font-bold tracking-tight text-foreground">
                           {stat.value}
                         </p>
-                        <p className="text-[0.7rem] text-muted-foreground mt-0.5">
+                        <p className="text-xs text-muted-foreground mt-0.5">
                           {stat.subtitle}
                         </p>
                       </div>
@@ -348,12 +348,12 @@ export default function DashboardPage() {
               <Card className="border-border/80 bg-card shadow-sm">
                 <CardContent className="p-4 sm:p-5">
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                    <div className="space-y-0.5">
-                      <h3 className="text-sm font-semibold flex items-center gap-1.5">
-                        <Briefcase className="size-4 text-emerald-600" />
+                    <div className="space-y-1">
+                      <h3 className="text-base font-semibold flex items-center gap-2">
+                        <Briefcase className="size-4.5 text-emerald-600" />
                         Open Client Project / Escrow Contract
                       </h3>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-sm text-muted-foreground">
                         Received a project invitation link from a client? Paste the deal ID or URL here to view terms.
                       </p>
                     </div>
@@ -363,11 +363,11 @@ export default function DashboardPage() {
                         placeholder="e.g. deal-001 or project URL"
                         value={dealInput}
                         onChange={(e) => setDealInput(e.target.value)}
-                        className="bg-background text-xs h-9"
+                        className="bg-background text-sm h-10"
                       />
-                      <Button type="submit" size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs gap-1 shrink-0 h-9">
+                      <Button type="submit" size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm gap-1.5 shrink-0 h-10 px-4 font-medium">
                         Open Project
-                        <ArrowRight className="size-3.5" />
+                        <ArrowRight className="size-4" />
                       </Button>
                     </form>
                   </div>
@@ -380,22 +380,22 @@ export default function DashboardPage() {
               <div className="space-y-5">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <Tabs value={filterTab} onValueChange={setFilterTab} className="w-full sm:w-auto">
-                    <TabsList className="grid grid-cols-5 w-full sm:w-auto h-9 text-xs">
-                      <TabsTrigger value="all" className="text-xs">All ({roleDeals.length})</TabsTrigger>
-                      <TabsTrigger value="progress" className="text-xs">In Progress</TabsTrigger>
-                      <TabsTrigger value="delivered" className="text-xs">Delivered</TabsTrigger>
-                      <TabsTrigger value="completed" className="text-xs">Completed</TabsTrigger>
-                      <TabsTrigger value="disputed" className="text-xs">Disputed</TabsTrigger>
+                    <TabsList className="grid grid-cols-5 w-full sm:w-auto h-9 text-xs sm:text-sm">
+                      <TabsTrigger value="all" className="text-xs sm:text-sm">All ({roleDeals.length})</TabsTrigger>
+                      <TabsTrigger value="progress" className="text-xs sm:text-sm">In Progress</TabsTrigger>
+                      <TabsTrigger value="delivered" className="text-xs sm:text-sm">Delivered</TabsTrigger>
+                      <TabsTrigger value="completed" className="text-xs sm:text-sm">Completed</TabsTrigger>
+                      <TabsTrigger value="disputed" className="text-xs sm:text-sm">Disputed</TabsTrigger>
                     </TabsList>
                   </Tabs>
 
                   <div className="relative w-full sm:w-64">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
                       placeholder="Search projects…"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-8 text-xs h-9 bg-card"
+                      className="pl-8 text-sm h-9 bg-card"
                     />
                   </div>
                 </div>
@@ -437,29 +437,29 @@ export default function DashboardPage() {
               <div className="space-y-5">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <Tabs value={filterTab} onValueChange={setFilterTab} className="w-full sm:w-auto">
-                    <TabsList className="grid grid-cols-6 w-full sm:w-auto h-9 text-xs">
-                      <TabsTrigger value="all" className="text-xs">All ({roleDeals.length})</TabsTrigger>
-                      <TabsTrigger value="awaiting" className="text-xs">Awaiting</TabsTrigger>
-                      <TabsTrigger value="progress" className="text-xs">In Progress</TabsTrigger>
-                      <TabsTrigger value="delivered" className="text-xs">Review</TabsTrigger>
-                      <TabsTrigger value="completed" className="text-xs">Completed</TabsTrigger>
-                      <TabsTrigger value="disputed" className="text-xs">Disputed</TabsTrigger>
+                    <TabsList className="grid grid-cols-6 w-full sm:w-auto h-9 text-xs sm:text-sm">
+                      <TabsTrigger value="all" className="text-xs sm:text-sm">All ({roleDeals.length})</TabsTrigger>
+                      <TabsTrigger value="awaiting" className="text-xs sm:text-sm">Awaiting</TabsTrigger>
+                      <TabsTrigger value="progress" className="text-xs sm:text-sm">In Progress</TabsTrigger>
+                      <TabsTrigger value="delivered" className="text-xs sm:text-sm">Review</TabsTrigger>
+                      <TabsTrigger value="completed" className="text-xs sm:text-sm">Completed</TabsTrigger>
+                      <TabsTrigger value="disputed" className="text-xs sm:text-sm">Disputed</TabsTrigger>
                     </TabsList>
                   </Tabs>
 
                   <div className="flex items-center gap-2">
                     <div className="relative w-full sm:w-56">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                       <Input
                         placeholder="Search posted projects…"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-8 text-xs h-9 bg-card"
+                        className="pl-8 text-sm h-9 bg-card"
                       />
                     </div>
                     <Link href="/deals/new">
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-1.5 h-9 shrink-0">
-                        <Plus className="size-3.5" />
+                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium gap-1.5 h-9 shrink-0 px-3">
+                        <Plus className="size-4" />
                         Post Project
                       </Button>
                     </Link>
@@ -557,12 +557,12 @@ export default function DashboardPage() {
                                     Panchayat AI: {deal.aiVerdict.verdict}
                                   </span>
                                   {deal.aiVerdict.verdict === "SPLIT" && (
-                                    <span className="font-mono text-[0.7rem]">
+                                    <span className="font-mono text-xs font-bold">
                                       ₹{deal.aiVerdict.sellerAmount} / ₹{deal.aiVerdict.buyerAmount}
                                     </span>
                                   )}
                                 </div>
-                                <p className="text-muted-foreground line-clamp-2 text-[0.72rem] leading-relaxed">
+                                <p className="text-muted-foreground line-clamp-2 text-xs leading-relaxed">
                                   {deal.aiVerdict.reasoning}
                                 </p>
                               </div>

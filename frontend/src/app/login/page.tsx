@@ -98,7 +98,7 @@ export default function LoginPage() {
                 <Lock className="size-5" />
               </div>
               <CardTitle className="text-2xl font-bold tracking-tight">Sign in to Tijori</CardTitle>
-              <CardDescription className="text-xs">
+              <CardDescription className="text-sm">
                 Access your escrow contracts, verify deliverables, and release payments safely.
               </CardDescription>
             </CardHeader>
@@ -107,7 +107,7 @@ export default function LoginPage() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-xs">Work Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium">Work Email</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input
@@ -125,8 +125,8 @@ export default function LoginPage() {
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password" className="text-xs">Password</Label>
-                    <span className="text-[0.7rem] text-emerald-600 hover:underline cursor-pointer">
+                    <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+                    <span className="text-sm text-emerald-600 hover:underline cursor-pointer">
                       Forgot password?
                     </span>
                   </div>
@@ -158,7 +158,7 @@ export default function LoginPage() {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2 font-semibold shadow-sm"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white gap-2 font-semibold shadow-sm text-sm"
                 >
                   {isLoading ? (
                     <>
@@ -179,7 +179,7 @@ export default function LoginPage() {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-border" />
                 </div>
-                <div className="relative flex justify-center text-[0.68rem] uppercase">
+                <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-card px-2 text-muted-foreground font-medium">
                     Or instant sign-in as verified account
                   </span>
@@ -200,11 +200,11 @@ export default function LoginPage() {
                     <Briefcase className="size-3.5" />
                   </div>
                   <div className="text-left flex-1 truncate">
-                    <div className="font-semibold text-foreground flex items-center gap-1">
+                    <div className="font-semibold text-foreground flex items-center gap-1 text-xs">
                       {PRESET_USERS.seller.name}
                       <CheckCircle2 className="size-3 text-emerald-600" />
                     </div>
-                    <div className="text-[0.65rem] text-muted-foreground truncate">
+                    <div className="text-xs text-muted-foreground truncate">
                       {PRESET_USERS.seller.roleTitle} (Freelancer)
                     </div>
                   </div>
@@ -222,11 +222,11 @@ export default function LoginPage() {
                     <ShoppingBag className="size-3.5" />
                   </div>
                   <div className="text-left flex-1 truncate">
-                    <div className="font-semibold text-foreground flex items-center gap-1">
+                    <div className="font-semibold text-foreground flex items-center gap-1 text-xs">
                       {PRESET_USERS.buyer.name}
                       <CheckCircle2 className="size-3 text-blue-600" />
                     </div>
-                    <div className="text-[0.65rem] text-muted-foreground truncate">
+                    <div className="text-xs text-muted-foreground truncate">
                       {PRESET_USERS.buyer.roleTitle} (Client)
                     </div>
                   </div>
@@ -234,7 +234,7 @@ export default function LoginPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="pt-0 pb-5 text-center justify-center text-[0.7rem] text-muted-foreground">
+            <CardFooter className="pt-0 pb-5 text-center justify-center text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="size-3.5 text-emerald-600" />
                 RBI Compliant Escrow Partner · 256-bit SSL Security
