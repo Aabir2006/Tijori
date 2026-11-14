@@ -1,179 +1,111 @@
-# 🔐 Tijori
+# Tijori — Escrow Platform for Freelance Deals
 
-### *Pehle kaam, phir daam.*
+**Demo only**: No real payments, no real auth. Built for hackathon (~8 hours).
 
-**UPI-style escrow for freelancers and small sellers in India.** The buyer's money stays in a digital vault until the work is delivered and accepted. If there's a disagreement, **Panchayat AI** reviews the evidence and recommends a fair outcome.
-
-Built by **Team Ghee Khatam** for the *Financial Technology & Payments* track.
-
-> ⚠️ **Hackathon demo:** login and payments are simulated. No real money moves. See [How the real version works](#how-the-real-version-works).
-
----
-
-## The Problem
-
-Freelancers, small sellers and clients in India make deals over UPI, WhatsApp and Instagram with no trust layer in between.
-
-- **Buyers** pay upfront and sometimes get nothing, or poor work.
-- **Sellers** deliver first and sometimes never get paid.
-- When a dispute happens, there is no neutral party, only screenshots and arguments.
-
-The result is lost money, scams, and small businesses that can't grow because strangers don't trust each other.
-
-## The Solution
-
-Tijori sits between buyer and seller:
-
-1. The seller creates a deal and shares a link.
-2. The buyer pays into escrow. The money is held safely.
-3. The seller delivers the work.
-4. The buyer accepts and the seller gets paid, or the buyer disputes and **Panchayat AI** recommends a verdict.
+## Stack
+- **Backend**: FastAPI + uvicorn, `psycopg2` (no ORM), Anthropic Python SDK
+- **Database**: PostgreSQL (Render managed free tier)
+- **AI**: Anthropic Claude for dispute verdicts
+- **Frontend**: React (separate repo, consumes JSON contract)
 
 ---
 
-## Features
-
-- **Deal creation** with a shareable link
-- **Simulated UPI payment** into escrow
-- **Escrow banner** showing exactly how much is held
-- **Delivery submission** with proof (link or note)
-- **Accept or dispute** flow for buyers
-- **Panchayat AI**: reads the deal, delivery proof and complaint, then recommends *Release*, *Refund* or *Split* with reasoning
-- **Admin resolution screen** for the final decision
-- **Activity timeline** on every deal
-- **One-click demo reset** with seeded data
-
-## Deal Lifecycle
-
-```
-CREATED → FUNDED → DELIVERED → COMPLETED
-                       │
-                       └→ DISPUTED → RESOLVED_RELEASED
-                                   → RESOLVED_REFUNDED
-                                   → RESOLVED_SPLIT
-```
-
-| Status | Seller sees | Buyer sees | Admin sees |
-|---|---|---|---|
-| `CREATED` | Share link | **Pay ₹X** | n/a |
-| `FUNDED` | **Submit delivery** | Waiting for delivery | n/a |
-| `DELIVERED` | Waiting for buyer | **Accept** / **Dispute** | n/a |
-| `DISPUTED` | Under review | Under review | AI verdict + **Resolve** |
-| `COMPLETED` / `RESOLVED_*` | Final state | Final state | n/a |
-
-## Roles
-
-| Role | What they do |
-|---|---|
-| **Seller** | Creates deals, delivers work, gets paid |
-| **Buyer** | Pays into escrow, accepts or disputes |
-| **Admin** | Reviews disputes and makes the final call |
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js (App Router) + Tailwind CSS |
-| Backend | Next.js API routes |
-| Database | SQLite or Supabase (Postgres) |
-| AI | LLM API (Claude or Gemini) |
-| Hosting | Vercel |
-
-## API Overview
-
-Every request carries two headers (no real auth in the demo):
-
-```
-x-user-role: SELLER | BUYER | ADMIN
-x-user-name: <display name>
-```
-
-| Method | Endpoint | Role | Transition |
-|---|---|---|---|
-| `POST` | `/api/deals` | Seller | Creates deal → `CREATED` |
-| `GET` | `/api/deals` | Any | Lists deals (filter by `status`, `sellerName`, `buyerName`) |
-| `GET` | `/api/deals/:id` | Any | Returns deal + timeline events |
-| `POST` | `/api/deals/:id/fund` | Buyer | `CREATED` → `FUNDED` |
-| `POST` | `/api/deals/:id/deliver` | Seller | `FUNDED` → `DELIVERED` |
-| `POST` | `/api/deals/:id/accept` | Buyer | `DELIVERED` → `COMPLETED` |
-| `POST` | `/api/deals/:id/dispute` | Buyer | `DELIVERED` → `DISPUTED` (triggers AI verdict) |
-| `POST` | `/api/deals/:id/resolve` | Admin | `DISPUTED` → `RESOLVED_*` |
-| `POST` | `/api/dev/seed` | Any | Resets and loads demo data |
-
-**Errors** use one format: `{ "error": { "code": "...", "message": "..." } }` with codes `VALIDATION` (400), `FORBIDDEN` (403), `NOT_FOUND` (404), `INVALID_STATE` (409), `SERVER` (500).
-
-## Data Model
-
-```
-deals:  id, title, description, amount, status, seller_name, buyer_name,
-        delivery_proof, dispute_reason, ai_verdict, created_at
-events: id, deal_id, type, message, actor, created_at
-```
-
-## Panchayat AI
-
-When a buyer raises a dispute, the backend sends the deal title, agreed work, amount, delivery proof and buyer complaint to the model. It returns:
-
-```json
-{
-  "verdict": "RELEASE | REFUND | SPLIT",
-  "seller_percent": 50,
-  "reasoning": "2-3 sentence explanation"
-}
-```
-
-The admin sees this as a recommendation and makes the final decision. If the AI call fails, the dispute still goes through and the admin reviews it manually.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 20+
-- npm or pnpm
-
-### Setup
+## Quick Start (Local)
 
 ```bash
-# Clone
-git clone <your-repo-url>
+# 1. Clone and enter
 cd tijori
 
-# Install
-npm install
+# 2. Create virtualenv & install
+python -m venv .venv
+source .venv/bin/activate
+pip install -r backend/requirements.txt
 
-# Configure environment
-cp .env.example .env.local
-# Add your keys (see below)
+# 3. Start local PostgreSQL (Docker)
+docker run -d --name tijori-db \
+  -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=tijori \
+  -p 5432:5432 postgres:16
 
-# Run
-npm run dev
+# 4. Configure env
+cp backend/.env.example backend/.env
+# Edit backend/.env → add your ANTHROPIC_API_KEY (DATABASE_URL already set for local)
+
+# 5. Run server
+cd backend
+python -m uvicorn main:app --reload --port 8000
+
+# 6. Seed demo data (optional)
+curl -X POST http://localhost:8000/api/dev/seed -H "Content-Type: application/json" -d '{}'
+
+# 7. Run tests
+cd ../backend-tests
+./test.sh http://localhost:8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+---
 
-### Environment Variables
+## Environment Variables
 
-```env
-# AI provider key (Claude or Gemini)
-AI_API_KEY=your_key_here
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `DATABASE_URL` | Yes | `postgresql://user:pass@localhost:5432/tijori` | PostgreSQL connection string |
+| `GEMINI_API_KEY` | Yes | — | API key from https://aistudio.google.com/app/apikey |
+| `AI_MODEL` | No | `gemini-1.5-flash-latest` | Model for dispute verdicts |
+| `ALLOW_SEED` | No | `false` | Enable `POST /api/dev/seed` (dev only) |
 
-# Database (if using Supabase)
-SUPABASE_URL=your_url
-SUPABASE_ANON_KEY=your_key
+---
+
+## API Contract
+
+See [`CONTRACT.md`](CONTRACT.md) — **single source of truth** for frontend & backend.
+
+Key points:
+- **Statuses**: `CREATED` → `FUNDED` → `DELIVERED` → `COMPLETED` / `DISPUTED` → `RESOLVED_*`
+- **Auth**: Header `x-user-role` (seller|buyer|admin) + `x-user-name` on every request
+- **Money**: Integer rupees (no paise, no floats)
+- **Errors**: `{ "error": { "code": "...", "message": "..." } }` — 400/403/404/409
+
+---
+
+## Deploy to Render (Free Tier)
+
+### One-time setup
+1. Push this repo to GitHub
+2. In Render dashboard: **New → Web Service** → connect repo
+3. Render auto-detects `render.yaml` — review and **Create Web Service**
+   - This provisions **both** the web service **and** a PostgreSQL database (free tier)
+4. In service **Environment** tab, add:
+   - `GEMINI_API_KEY` = your key (mark as **Secret**)
+   - `AI_MODEL` = `gemini-1.5-flash-latest` (or your choice)
+   - `ALLOW_SEED` = `true` (set to `false` after demo)
+   - `DATABASE_URL` is **auto-linked** from the database (no manual entry needed)
+5. Deploy
+
+### Render Settings (if not using render.yaml)
+- **Build Command**: `pip install -r backend/requirements.txt`
+- **Start Command**: `cd backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT`
+- **Python Version**: 3.11 (set in Render dashboard or via `PYTHON_VERSION` env var)
+
+### Render Free Tier Notes
+- **PostgreSQL free tier**: 90 days, then expires (fine for hackathon)
+- **Web service free tier**: spins down after 15 min inactivity (cold start ~30s)
+- **Data persists** across deploys (unlike SQLite on ephemeral disk)
+- After first deploy, call `POST /api/dev/seed` to populate demo data
+
+### Verify deploy
+```bash
+# Health check
+curl https://your-app.onrender.com/api/health
+# → {"ok":true}
+
+# Seed demo data
+curl -X POST https://your-app.onrender.com/api/dev/seed \
+  -H "Content-Type: application/json" -d '{}'
+# → {"ok":true,"dealsCreated":5}
+
+# Run tests against deployed URL
+./backend-tests/test.sh https://your-app.onrender.com
 ```
-
-### Try the Demo
-
-1. Open the app and click **Reset demo** to load sample deals.
-2. Continue as **Seller** and create a deal.
-3. Switch to **Buyer**, open the deal link and pay.
-4. Switch back to **Seller** and submit delivery.
-5. As **Buyer**, either accept or dispute.
-6. As **Admin**, review the Panchayat AI verdict and resolve.
 
 ---
 
@@ -181,66 +113,49 @@ SUPABASE_ANON_KEY=your_key
 
 ```
 tijori/
-├── app/
-│   ├── page.tsx              # Landing page + role picker
-│   ├── dashboard/            # Deal list
-│   ├── deals/
-│   │   ├── new/              # Create deal form
-│   │   └── [id]/             # Deal detail + timeline + actions
-│   └── api/
-│       ├── deals/            # Deal routes
-│       └── dev/seed/         # Demo seed route
-├── components/               # UI components
-├── lib/
-│   ├── types.ts              # Shared types (frontend + backend)
-│   ├── api.ts                # Typed API client
-│   ├── db.ts                 # Database setup
-│   ├── deals.ts              # Status rules + helpers
-│   └── ai.ts                 # Panchayat AI call
-└── README.md
+├── CONTRACT.md              # API contract (frontend + backend)
+├── render.yaml              # Render deployment config (web + postgres)
+├── backend/
+│   ├── main.py              # App, routes (YOU write this)
+│   ├── db.py                # DB connection, table creation (YOU write this)
+│   ├── helpers.py           # Header parsing, require_role, assert_status, log_event, error handlers (YOU write this)
+│   ├── ai.py                # AI verdict (Google Gemini SDK) — THIS REPO
+│   ├── seed.py              # Demo data loader — THIS REPO
+│   ├── requirements.txt     # Python deps — THIS REPO
+│   └── .env.example         # Env template — THIS REPO
+├── backend-tests/
+│   └── test.sh              # Integration tests (curl + jq) — THIS REPO
+└── README.md                # This file
 ```
 
 ---
 
-## What's Simulated
+## Running Tests
 
-| Real world | In this demo |
-|---|---|
-| User accounts and KYC | A role picker with a display name |
-| UPI / gateway payment | A mock UPI screen with a "Pay ₹X" button |
-| Funds in a nodal account | A status field and an escrow balance display |
+```bash
+# Local
+./backend-tests/test.sh http://localhost:8000
 
-## How the Real Version Works
+# Deployed
+./backend-tests/test.sh https://your-app.onrender.com
+```
 
-1. **Payments:** integrate a gateway such as Razorpay for collection and payouts.
-2. **Funds custody:** hold money in a nodal or escrow account with a regulated partner.
-3. **Identity:** add KYC for sellers and basic verification for buyers.
-4. **Auth:** real accounts with session management and MFA.
-5. **Disputes:** keep AI as a recommendation layer, with trained human reviewers making final calls.
-
-## Roadmap
-
-- [ ] Real UPI and payment gateway integration
-- [ ] KYC and seller reputation scores
-- [ ] Milestone-based payments for larger projects
-- [ ] WhatsApp bot to create and track deals
-- [ ] Marketplace of verified sellers
-- [ ] Evidence uploads (files, screenshots) for disputes
+Requires: `curl`, `jq` (standard on most Linux/macOS; `brew install jq` on Mac).
 
 ---
 
-## Team
+## Fintech Concepts (Quick Reference)
 
-**Team Ghee Khatam** 🫙
+| Concept | In This Project |
+|---------|-----------------|
+| **Escrow** | Money held by platform until both parties agree (or admin resolves) |
+| **State Machine** | Deal status transitions are strict (see contract); invalid → 409 |
+| **Audit Trail** | Every status change writes an `events` row (who, when, from→to) |
+| **Integer Money** | `amount` stored as integer rupees — avoids floating-point bugs |
+| **Conditional Update** | `UPDATE ... WHERE status = ?` prevents double-submit races |
+| **Atomic Transaction** | Status change + event insert = single DB transaction |
 
-*Humara ghee khatam hua, par aapka paisa nahi.*
-
-| Name | Role |
-|---|---|
-| _Add name_ | Frontend |
-| _Add name_ | Backend |
-| _Add name_ | _Role_ |
+---
 
 ## License
-
-MIT
+MIT — hackathon demo code.

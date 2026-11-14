@@ -1,5 +1,5 @@
 import json, os, uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 from psycopg.rows import dict_row
 import psycopg
@@ -55,12 +55,14 @@ def init_db() -> None:
 
 
 def _to_iso(dt: datetime | str | None) -> str | None:
-    """Convert datetime/UUID to ISO string (ms precision, Z suffix)."""
+    """Convert datetime to ISO string (ms precision, Z suffix, UTC)."""
     if dt is None:
         return None
     if isinstance(dt, str):
         return dt
-    # datetime -> ISO with ms precision
+    # Convert to UTC if timezone-aware, then format with Z suffix
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(timezone.utc)
     return dt.isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
 

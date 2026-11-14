@@ -57,6 +57,12 @@ def assert_status(deal: dict, expected_status: str) -> None:
 
 def get_deal_or_404(conn, deal_id: str) -> dict:
     """Fetch deal by ID or raise NOT_FOUND. Returns raw dict row."""
+    # Validate UUID format first to return 404 instead of 500
+    try:
+        uuid.UUID(deal_id)
+    except ValueError:
+        raise ApiError(f"Deal {deal_id} not found", "NOT_FOUND", 404)
+
     with conn.cursor() as cur:
         cur.execute("SELECT * FROM deals WHERE id = %s", (deal_id,))
         deal = cur.fetchone()

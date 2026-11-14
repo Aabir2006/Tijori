@@ -23,6 +23,17 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         status_code = 400,
         content = {"error": {"code": "VALIDATION_ERROR", "message": "Invalid request payload"}}
     )
+
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    """Catch-all for unhandled exceptions — return contract error format."""
+    return JSONResponse(
+        status_code=500,
+        content={"error": {"code": "INTERNAL_ERROR", "message": "Internal server error"}},
+    )
+
+
 @app.get("/api/health")
 def health():
     return {"ok": True}
@@ -291,10 +302,13 @@ async def resolve(deal_id: str, request: Request):
             deal_dict = row_to_deal(deal)
             verdict = deal_dict.get("aiVerdict")
 
-            if isinstance(verdict, dict) and verdict.get("recommendation") == "SPLIT":
-                share = verdict.get("sellerSharePercent")
-                if type(share) is not int or not (1 <= share <= 99):
-                    raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
+            if not isinstance(verdict, dict):
+                raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
+            if verdict.get("recommendation") != "SPLIT":
+                raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
+            share = verdict.get("sellerSharePercent")
+            if type(share) is not int or not (1 <= share <= 99):
+                raise ApiError("SPLIT requires valid aiVerdict with sellerSharePercent 1-99", "VALIDATION_ERROR", 400)
 
         new_status = outcome_map[outcome]
         with conn.cursor() as cur:
