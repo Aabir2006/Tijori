@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/auth-context";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type { Role } from "@/lib/types";
 
 const roleConfig: Record<
@@ -131,7 +132,10 @@ export function Navbar() {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          {/* Venom Symbiote Theme Toggle */}
+          <ThemeToggle />
+
           {isAuthenticated && user ? (
             <>
               {/* Role Indicator & Fast Switcher */}
