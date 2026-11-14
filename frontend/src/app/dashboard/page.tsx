@@ -51,7 +51,13 @@ export default function DashboardPage() {
   const [dealInput, setDealInput] = useState<string>("");
 
   const role = user?.role || "SELLER";
-  const userName = user?.name || "Arjun Verma";
+  const userName = user?.name || "Member";
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [authLoading, isAuthenticated, router]);
 
   const loadData = async () => {
     setLoading(true);
@@ -79,28 +85,26 @@ export default function DashboardPage() {
 
   // Filtered deals according to active role
   const roleDeals = useMemo(() => {
-    if (!deals) return [];
+    if (!deals || !user) return [];
     if (role === "SELLER") {
       return deals.filter(
         (d) =>
           d.sellerName.toLowerCase() === userName.toLowerCase() ||
-          d.sellerName.toLowerCase().includes("arjun") ||
-          d.sellerName === "Demo User"
+          (user?.id === "usr_seller_01" && (d.sellerName.toLowerCase().includes("arjun") || d.sellerName === "Demo User"))
       );
     } else if (role === "BUYER") {
       return deals.filter(
         (d) =>
           (d.buyerName &&
             (d.buyerName.toLowerCase() === userName.toLowerCase() ||
-              d.buyerName.toLowerCase().includes("rohan") ||
-              d.buyerName === "Demo User")) ||
+              (user?.id === "usr_buyer_02" && (d.buyerName.toLowerCase().includes("rohan") || d.buyerName === "Demo User")))) ||
           d.status === "CREATED"
       );
     } else {
       // Admin sees everything
       return deals;
     }
-  }, [deals, role, userName]);
+  }, [deals, role, userName, user]);
 
   // Tab & search-filtered deals
   const filteredDeals = useMemo(() => {
@@ -206,7 +210,7 @@ export default function DashboardPage() {
     router.push(`/deals/${id}`);
   };
 
-  if (!mounted || authLoading) {
+  if (!mounted || authLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />

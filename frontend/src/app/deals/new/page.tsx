@@ -33,7 +33,7 @@ import { toast } from "sonner";
 
 export default function CreateDealPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   // Helper date generators
@@ -53,17 +53,23 @@ export default function CreateDealPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [freelancerName, setFreelancerName] = useState("Arjun Verma");
+  const [freelancerName, setFreelancerName] = useState("");
   const [timeLimitDays, setTimeLimitDays] = useState<number>(7);
   const [deadlineDate, setDeadlineDate] = useState<string>(getFutureDate(7));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const role = user?.role || "BUYER";
-  const userName = user?.name || "Rohan Mehta";
+  const role = user?.role;
+  const userName = user?.name || "Client";
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [authLoading, isAuthenticated, router]);
 
   const handleSelectDays = (days: number) => {
     setTimeLimitDays(days);
@@ -90,7 +96,7 @@ export default function CreateDealPage() {
       })
     : "";
 
-  if (!mounted) {
+  if (!mounted || authLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />

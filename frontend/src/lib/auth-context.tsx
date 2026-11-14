@@ -55,7 +55,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AUTH_STORAGE_KEY = "tijori_auth_user";
+const AUTH_STORAGE_KEY = "tijori_auth_session_v2";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -63,6 +63,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
+      // Clear legacy auto-seeded keys from previous versions
+      localStorage.removeItem("tijori_auth_user");
+
       const stored = localStorage.getItem(AUTH_STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored) as User;
@@ -71,31 +74,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("tijori_role", parsed.role);
         localStorage.setItem("tijori_name", parsed.name);
       } else {
-        // default to Arjun Verma (Seller) as default active session if legacy keys exist
-        const legacyRole = (localStorage.getItem("tijori_role") as Role) || "SELLER";
-        const legacyName = localStorage.getItem("tijori_name");
-        if (legacyName) {
-          const fallbackUser: User = {
-            id: `usr_${Date.now()}`,
-            name: legacyName,
-            email: `${legacyName.toLowerCase().replace(/\s+/g, ".")}@tijori.work`,
-            role: legacyRole,
-            roleTitle: legacyRole === "SELLER" ? "Independent Professional" : legacyRole === "BUYER" ? "Client / Organization" : "Compliance Auditor",
-            isVerified: true,
-            memberSince: "Nov 2026",
-          };
-          setUser(fallbackUser);
-          localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(fallbackUser));
-        } else {
-          // Set standard default verified seller user
-          setUser(PRESET_USERS.seller);
-          localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(PRESET_USERS.seller));
-          localStorage.setItem("tijori_role", PRESET_USERS.seller.role);
-          localStorage.setItem("tijori_name", PRESET_USERS.seller.name);
-        }
+        // Do NOT auto-login as any demo user!
+        // Opening localhost must always be a clean logged-out state unless explicitly authenticated.
+        setUser(null);
+        localStorage.removeItem("tijori_role");
+        localStorage.removeItem("tijori_name");
       }
     } catch {
-      setUser(PRESET_USERS.seller);
+      setUser(null);
     } finally {
       setIsLoading(false);
     }
@@ -158,24 +144,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return target;
   };
 
-  const switchRole = (newRole: Role) => {
-    if (!user) return;
-    const updated: User = {
-      ...user,
-      role: newRole,
-      roleTitle:
-        newRole === "SELLER"
-          ? "Independent Professional"
-          : newRole === "BUYER"
-          ? "Verified Client"
-          : "Chief Escrow Arbitrator",
-    };
-    saveUserSession(updated);
+  // Lock roles: no role swapping allowed. Buyer remains buyer, seller remains seller.
+  const switchRole = (_newRole: Role) => {
+    // Role swapping is permanently disabled
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem("tijori_auth_user");
     localStorage.removeItem("tijori_role");
     localStorage.removeItem("tijori_name");
   };

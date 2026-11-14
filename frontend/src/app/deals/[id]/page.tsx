@@ -87,8 +87,8 @@ function DealDetailContent() {
   const [sellerSplitPercent, setSellerSplitPercent] = useState<number>(50);
   const [isResolving, setIsResolving] = useState(false);
 
-  const role = user?.role || "SELLER";
-  const userName = user?.name || "Arjun Verma";
+  const role = user?.role || "GUEST";
+  const userName = user?.name || "Guest";
 
   // Load deal
   const loadDeal = async () => {
@@ -428,9 +428,9 @@ function DealDetailContent() {
     );
   }
 
-  const isSeller = role === "SELLER";
-  const isBuyer = role === "BUYER";
-  const isAdmin = role === "ADMIN";
+  const isSeller = user?.role === "SELLER";
+  const isBuyer = user?.role === "BUYER";
+  const isAdmin = user?.role === "ADMIN";
 
   const isUrl = (text: string) => {
     return text.startsWith("http://") || text.startsWith("https://");
@@ -704,14 +704,45 @@ function DealDetailContent() {
                 <CardTitle className="text-sm font-bold flex items-center justify-between">
                   <span>Contract Actions</span>
                   <Badge variant="outline" className="text-xs px-2 py-0.5 capitalize font-medium">
-                    {role.toLowerCase()} perspective
+                    {user ? `${user.role.toLowerCase()} perspective` : "Guest viewer"}
                   </Badge>
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="pt-4 space-y-4">
+                {!user && (
+                  <div className="space-y-3">
+                    <div className="rounded-xl bg-muted/60 p-3.5 text-xs text-muted-foreground space-y-1.5 border border-border">
+                      <p className="font-bold text-foreground flex items-center gap-1.5 text-sm">
+                        <ShieldCheck className="size-4 text-emerald-600" />
+                        Viewing Escrow Contract
+                      </p>
+                      <p className="text-xs leading-relaxed">
+                        Sign in to deposit funds via UPI escrow or submit deliverables for milestone approval.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <Button
+                        size="sm"
+                        onClick={() => router.push("/login")}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs h-9"
+                      >
+                        Sign In
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => router.push("/register")}
+                        className="text-xs h-9"
+                      >
+                        Create Account
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
                 {/* 1. CREATED */}
-                {deal.status === "CREATED" && (
+                {user && deal.status === "CREATED" && (
                   <>
                     {isSeller && (
                       <div className="space-y-3">
