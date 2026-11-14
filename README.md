@@ -28,7 +28,7 @@ docker run -d --name tijori-db \
 
 # 4. Configure env
 cp backend/.env.example backend/.env
-# Edit backend/.env → add your ANTHROPIC_API_KEY (DATABASE_URL already set for local)
+# Edit backend/.env → add your GEMINI_API_KEY (DATABASE_URL already set for local)
 
 # 5. Run server
 cd backend
