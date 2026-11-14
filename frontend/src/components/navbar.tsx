@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -146,59 +147,64 @@ export function Navbar() {
                   <ChevronDown className="size-3.5 text-muted-foreground opacity-60" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 p-1">
-                  <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
-                    Switch Workspace Role
-                  </DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => handleRoleChange("SELLER")}
-                    className={`flex items-center gap-2 text-sm font-medium ${
-                      user.role === "SELLER" ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 font-semibold" : ""
-                    }`}
-                  >
-                    <Briefcase className="size-4 text-emerald-600" />
-                    Freelancer / Seller
-                    {user.role === "SELLER" && <CheckCircle2 className="size-4 ml-auto text-emerald-600" />}
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem
-                    onClick={() => handleRoleChange("BUYER")}
-                    className={`flex items-center gap-2 text-sm font-medium ${
-                      user.role === "BUYER" ? "bg-blue-50 text-blue-800 dark:bg-blue-950/40 font-semibold" : ""
-                    }`}
-                  >
-                    <ShoppingBag className="size-4 text-blue-600" />
-                    Client / Buyer
-                    {user.role === "BUYER" && <CheckCircle2 className="size-3.5 ml-auto text-blue-600" />}
-                  </DropdownMenuItem>
-
-                  {user.role === "ADMIN" && (
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
+                      Switch Workspace Role
+                    </DropdownMenuLabel>
                     <DropdownMenuItem
-                      onClick={() => handleRoleChange("ADMIN")}
+                      onClick={() => handleRoleChange("SELLER")}
                       className={`flex items-center gap-2 text-sm font-medium ${
-                        user.role === "ADMIN" ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 font-semibold" : ""
+                        user.role === "SELLER" ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 font-semibold" : ""
                       }`}
                     >
-                      <Scale className="size-4 text-amber-600" />
-                      Arbitrator / Admin
-                      <CheckCircle2 className="size-4 ml-auto text-amber-600" />
+                      <Briefcase className="size-4 text-emerald-600" />
+                      Freelancer / Seller
+                      {user.role === "SELLER" && <CheckCircle2 className="size-4 ml-auto text-emerald-600" />}
                     </DropdownMenuItem>
-                  )}
+
+                    <DropdownMenuItem
+                      onClick={() => handleRoleChange("BUYER")}
+                      className={`flex items-center gap-2 text-sm font-medium ${
+                        user.role === "BUYER" ? "bg-blue-50 text-blue-800 dark:bg-blue-950/40 font-semibold" : ""
+                      }`}
+                    >
+                      <ShoppingBag className="size-4 text-blue-600" />
+                      Client / Buyer
+                      {user.role === "BUYER" && <CheckCircle2 className="size-3.5 ml-auto text-blue-600" />}
+                    </DropdownMenuItem>
+
+                    {user.role === "ADMIN" && (
+                      <DropdownMenuItem
+                        onClick={() => handleRoleChange("ADMIN")}
+                        className={`flex items-center gap-2 text-sm font-medium ${
+                          user.role === "ADMIN" ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 font-semibold" : ""
+                        }`}
+                      >
+                        <Scale className="size-4 text-amber-600" />
+                        Arbitrator / Admin
+                        <CheckCircle2 className="size-4 ml-auto text-amber-600" />
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuGroup>
 
                   <DropdownMenuSeparator />
-                  <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
-                    Switch Verified Persona
-                  </DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => loginAsPreset("seller")} className="text-sm">
-                    Arjun Verma (Creative Lead)
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => loginAsPreset("buyer")} className="text-sm">
-                    Rohan Mehta (Tech Lead)
-                  </DropdownMenuItem>
-                  {user.role === "ADMIN" && (
-                    <DropdownMenuItem onClick={() => loginAsPreset("admin")} className="text-xs">
-                      Panchayat Compliance Desk
+
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
+                      Switch Verified Persona
+                    </DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => loginAsPreset("seller")} className="text-sm">
+                      Arjun Verma (Creative Lead)
                     </DropdownMenuItem>
-                  )}
+                    <DropdownMenuItem onClick={() => loginAsPreset("buyer")} className="text-sm">
+                      Rohan Mehta (Tech Lead)
+                    </DropdownMenuItem>
+                    {user.role === "ADMIN" && (
+                      <DropdownMenuItem onClick={() => loginAsPreset("admin")} className="text-xs">
+                        Panchayat Compliance Desk
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
 
